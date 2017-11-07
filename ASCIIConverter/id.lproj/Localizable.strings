@@ -1,0 +1,16 @@
+/* 
+  Localizable.strings
+  GCF & GCM Calculator++
+
+  Created by Dai Tran on 10/30/17.
+  Copyright © 2017 DaiTranDev. All rights reserved.
+*/
+"Home" = "Halaman rumah";
+"Theme" = "Tema";
+"Feedback" = "Umpan balik";
+"Rate" = "Menilai";
+"Share" = "Membagikan";
+"UpgradeMessage" = "Upgrade ke ASCII Converter++ maka bisa anda pakai tanpa iklan.";
+"Upgrade" = "Mengupgrade";
+"Appname" = "ASCII Converter++";
+"MainTitle" = "ASCII Converter";
