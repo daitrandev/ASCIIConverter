@@ -14,3 +14,6 @@
 "Upgrade" = "提升";
 "Appname" = "ASCII转换器++";
 "MainTitle" = "ASCII转换器";
+"Attention" = "注意！";
+"AttentionMessage" = "可视化的ASCII代码只是在32到127之间。";
+"Done" = "完成";

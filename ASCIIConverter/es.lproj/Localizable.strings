@@ -14,3 +14,6 @@
 "Upgrade" = "Mejorar";
 "Appname" = "Convertidor ASCII++";
 "MainTitle" = "Convertidor ASCII";
+"Attention" = "¡Atención!";
+"AttentionMessage" = "El código visual ascii es solo entre 32 y 127.";
+"Done" = "¡Está hecho";

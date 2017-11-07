@@ -14,3 +14,6 @@
 "Upgrade" = "модернизировать";
 "Appname" = "Конвертер ASCII++";
 "MainTitle" = "Конвертер ASCII";
+"Attention" = "Внимание!";
+"AttentionMessage" = "Визуальный код ascii составляет от 32 до 127.";
+"Done" = "Ладно";

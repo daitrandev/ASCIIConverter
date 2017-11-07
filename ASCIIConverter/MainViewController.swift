@@ -207,7 +207,7 @@ extension MainViewController: UITextFieldDelegate {
                         textFieldArray[0]!.text! += String(describing: num.char)
                     } else {
                         if (num > 127 && !showUpgradeAlert) {
-                            presentAlert(titile: "CAUTION!", message: "The visual ASCII code is just between 32 and 127")
+                            presentAlert(titile: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("AttentionMessage", comment: ""), isUpgradeMessage: false)
                             showUpgradeAlert = true
                         }
                         return
@@ -220,11 +220,11 @@ extension MainViewController: UITextFieldDelegate {
         }
     }
     
-    func presentAlert(titile: String, message: String) {
+    func presentAlert(titile: String, message: String, isUpgradeMessage: Bool) {
         let alert = UIAlertController(title: titile, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-        if (titile != "CAUTION!") {
-            alert.addAction(UIAlertAction(title: "Upgrade", style: .default, handler: { (action) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .cancel, handler: nil))
+        if (isUpgradeMessage) {
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Upgrade", comment: ""), style: .default, handler: { (action) in
                 self.rateApp(appId: "id1308862883") { success in
                     print("RateApp \(success)")
                 }
@@ -310,11 +310,11 @@ extension MainViewController : GADInterstitialDelegate {
     }
     
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        presentAlert(titile: "ASCII Converter++", message: "Upgrade to ASCII Converter++ then you can use without ads.")
+        presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
     }
     
     func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
-        presentAlert(titile: "ASCII Converter++", message: "Upgrade to ASCII Converter++ then you can use without ads.")
+        presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
     }
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
@@ -322,7 +322,7 @@ extension MainViewController : GADInterstitialDelegate {
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        presentAlert(titile: "ASCII Converter++", message: "Upgrade to ASCII Converter++ then you can use without ads.")
+        presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
     }
 }
 

@@ -38,7 +38,7 @@ class HomeViewController: UIViewController, MFMailComposeViewControllerDelegate 
     
     var bannerView: GADBannerView!
     
-    var freeVersion: Bool = false
+    var freeVersion: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,7 +110,7 @@ class HomeViewController: UIViewController, MFMailComposeViewControllerDelegate 
     }
     
     @IBAction func OnShareAction(_ sender: Any) {
-        let appId = freeVersion ? "id1286627577" : "id1308862883    "
+        let appId = freeVersion ? "id1286627577" : "id1308862883"
         let message: String = "https://itunes.apple.com/app/\(appId)"
         let vc = UIActivityViewController(activityItems: [message], applicationActivities: [])
         vc.popoverPresentationController?.sourceView = self.view

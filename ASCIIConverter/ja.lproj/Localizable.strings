@@ -14,3 +14,6 @@
 "Upgrade" = "アドバンス";
 "Appname" = "ASCII変換++";
 "MainTitle" = "ASCII変換";
+"Attention" = "注意！";
+"AttentionMessage" = "ビジュアルASCIIコードは32〜127の間にあります。";
+"Done" = "完了";

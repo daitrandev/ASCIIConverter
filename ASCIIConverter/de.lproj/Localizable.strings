@@ -14,3 +14,6 @@
 "Upgrade" = "Aktualisierung";
 "Appname" = "ASCII-Code umwandeln++";
 "MainTitle" = "ASCII-Code umwandeln";
+"Attention" = "Aufmerksamkeit!";
+"AttentionMessage" = "Der visuelle ASCII-Code liegt nur zwischen 32 und 127.";
+"Done" = "Gemacht";

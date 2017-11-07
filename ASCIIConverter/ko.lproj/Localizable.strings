@@ -14,3 +14,6 @@
 "Upgrade" = "업그레이드";
 "Appname" = "ASCII 변환기++";
 "MainTitle" = "ASCII 변환기";
+"Attention" = "주의!";
+"AttentionMessage" = "비주얼 ASCII 코드는 32에서 127 사이에 있습니다.";
+"Done" = "끝난";
