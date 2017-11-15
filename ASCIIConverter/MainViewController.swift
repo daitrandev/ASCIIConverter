@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
     
     var textFieldTagIsEditing: Int = 0
     
-    var freeVersion: Bool = true
+    var freeVersion: Bool = false
     
     var bannerView: GADBannerView!
     
@@ -67,7 +67,7 @@ class MainViewController: UIViewController {
         
         loadColor()
         
-        navigationController?.navigationItem.title = NSLocalizedString("MainTitle", comment: "")
+        navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
     }
 
     override func didReceiveMemoryWarning() {

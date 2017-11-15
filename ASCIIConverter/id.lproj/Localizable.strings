@@ -15,5 +15,5 @@
 "Appname" = "ASCII Converter++";
 "MainTitle" = "ASCII Converter";
 "Attention" = "Perhatian!";
-"AttentionMessage" = "Kode ascii visual hanya antara 32 dan 127.";
+"AttentionMessage" = "Kode ASCII visual hanya antara 32 dan 127.";
 "Done" = "Selesai";

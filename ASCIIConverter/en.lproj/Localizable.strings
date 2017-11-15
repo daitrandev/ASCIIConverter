@@ -15,5 +15,5 @@
 "Appname" = "ASCII Converter++";
 "MainTitle" = "ASCII Converter";
 "Attention" = "Attention!";
-"AttentionMessage" = "The visual ascii code is just between 32 and 127.";
+"AttentionMessage" = "The visual ASCII code is just between 32 and 127.";
 "Done" = "Done";
