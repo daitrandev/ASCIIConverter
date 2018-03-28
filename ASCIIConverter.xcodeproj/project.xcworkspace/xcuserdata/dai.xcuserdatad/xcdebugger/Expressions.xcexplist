@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "MainViewController.textFieldEditingChanged(_:):MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "textFieldIsEditing">
+            </PersistentString>
+            <PersistentString
+               value = "sender.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MainViewController.viewDidLoad():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "navigationController?.navigationItem.title">
+            </PersistentString>
+            <PersistentString
+               value = "NSLocalizedString(&quot;MainTitle&quot;, comment: &quot;&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
