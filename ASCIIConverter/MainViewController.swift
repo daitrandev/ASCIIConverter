@@ -35,11 +35,15 @@ class MainViewController: UIViewController {
     
     var textFieldTagIsEditing: Int = 0
     
-    var freeVersion: Bool = false
+    var freeVersion: Bool = true
     
     var bannerView: GADBannerView!
     
     var interstitial: GADInterstitial?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return currentThemeIndex == 0 ? .default : .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +72,13 @@ class MainViewController: UIViewController {
         loadColor()
         
         navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (freeVersion) {
+            presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -222,9 +233,12 @@ extension MainViewController: UITextFieldDelegate {
     
     func presentAlert(titile: String, message: String, isUpgradeMessage: Bool) {
         let alert = UIAlertController(title: titile, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .cancel, handler: {(action) in
+            self.setNeedsStatusBarAppearanceUpdate()
+        }))
         if (isUpgradeMessage) {
             alert.addAction(UIAlertAction(title: NSLocalizedString("Upgrade", comment: ""), style: .default, handler: { (action) in
+                self.setNeedsStatusBarAppearanceUpdate()
                 self.rateApp(appId: "id1308862883") { success in
                     print("RateApp \(success)")
                 }
@@ -243,7 +257,7 @@ extension MainViewController: UITextFieldDelegate {
             completion(UIApplication.shared.openURL(url))
             return
         }
-        UIApplication.shared.open(url, options: [:], completionHandler: completion)
+        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: completion)
     }
 }
 
@@ -255,17 +269,13 @@ extension MainViewController: HomeViewControllerDelegate {
         
         navigationController?.navigationBar.barTintColor = mainBackgroundColors[currentThemeIndex]
         
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: mainBackgroundColors[1 - currentThemeIndex]]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: mainBackgroundColors[1 - currentThemeIndex]]
         
         navigationController?.navigationBar.tintColor = mainLabelColors[currentThemeIndex]
 
         view.backgroundColor = mainBackgroundColors[currentThemeIndex]
         
-        if (currentThemeIndex == 0) {
-            UIApplication.shared.statusBarStyle = .default
-        } else {
-            UIApplication.shared.statusBarStyle = .lightContent
-        }
+        setNeedsStatusBarAppearanceUpdate()
         
         tableView.reloadData()
     }
@@ -309,20 +319,8 @@ extension MainViewController : GADInterstitialDelegate {
         return interstitial
     }
     
-    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
-    }
-    
-    func interstitialDidFail(toPresentScreen ad: GADInterstitial) {
-        presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
-    }
-    
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         ad.present(fromRootViewController: self)
-    }
-    
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
     }
 }
 
@@ -341,4 +339,9 @@ extension Int {
     var char : Character {
         return Character(UnicodeScalar(self)!)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

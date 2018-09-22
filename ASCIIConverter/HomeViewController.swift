@@ -38,7 +38,11 @@ class HomeViewController: UIViewController, MFMailComposeViewControllerDelegate 
     
     var bannerView: GADBannerView!
     
-    var freeVersion: Bool = false
+    var freeVersion: Bool = true
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return currentThemeIndex == 0 ? .default : .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -126,15 +130,13 @@ class HomeViewController: UIViewController, MFMailComposeViewControllerDelegate 
             completion(UIApplication.shared.openURL(url))
             return
         }
-        UIApplication.shared.open(url, options: [:], completionHandler: completion)
+        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: completion)
     }
     
     func loadColor() {
         view.backgroundColor = mainBackgroundColor[currentThemeIndex]
         
         if (currentThemeIndex == 0) {
-            UIApplication.shared.statusBarStyle = .default
-            
             themeButton.setImage(#imageLiteral(resourceName: "theme-green"), for: .normal)
             feedbackButton.setImage(#imageLiteral(resourceName: "feedback-green"), for: .normal)
             rateButton.setImage(#imageLiteral(resourceName: "rate-green"), for: .normal)
@@ -142,8 +144,6 @@ class HomeViewController: UIViewController, MFMailComposeViewControllerDelegate 
             
             navigationController?.navigationBar.tintColor = UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0)
         } else {
-            UIApplication.shared.statusBarStyle = .lightContent
-            
             themeButton.setImage(#imageLiteral(resourceName: "theme-orange"), for: .normal)
             feedbackButton.setImage(#imageLiteral(resourceName: "feedback-orange"), for: .normal)
             rateButton.setImage(#imageLiteral(resourceName: "rate-orange"), for: .normal)
@@ -152,13 +152,15 @@ class HomeViewController: UIViewController, MFMailComposeViewControllerDelegate 
             navigationController?.navigationBar.tintColor = UIColor.orange
         }
         
+        setNeedsStatusBarAppearanceUpdate()
+        
         for i in 0..<labelArray.count {
             labelArray[i]?.textColor = mainBackgroundColor[1 - currentThemeIndex]
         }
         
         navigationController?.navigationBar.barTintColor = mainBackgroundColor[currentThemeIndex]
         
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: mainBackgroundColor[1 - currentThemeIndex]]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: mainBackgroundColor[1 - currentThemeIndex]]
     }
 }
 
@@ -192,4 +194,9 @@ extension HomeViewController : GADBannerViewDelegate {
             bannerView.alpha = 1
         })
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

@@ -24,21 +24,3 @@ class MainTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 }
-
-extension UITextField {
-    func makeRound(borderColor: UIColor) {
-        self.clipsToBounds = true
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 5
-        self.layer.borderWidth = 2
-        self.layer.borderColor = borderColor.cgColor
-    }
-}
-
-extension UILabel {
-    func makeRound() {
-        self.clipsToBounds = true
-        self.layer.masksToBounds = true
-        self.layer.cornerRadius = 5
-    }
-}
