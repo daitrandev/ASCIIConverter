@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
     
     var textFieldTagIsEditing: Int = 0
     
-    var freeVersion: Bool = true
+    var freeVersion: Bool = false
     
     var bannerView: GADBannerView!
     
