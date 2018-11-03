@@ -17,3 +17,5 @@
 "Attention" = "注意！";
 "AttentionMessage" = "可视化的ASCII代码只是在32到127之间。";
 "Done" = "完成";
+"Copied" = "复制";
+"Nothing to copy" = "无需复制";

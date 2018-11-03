@@ -17,3 +17,5 @@
 "Attention" = "Chú ý!";
 "AttentionMessage" = "Mã ASCII chỉ có thể thấy trong khoảng từ 32 đến 127.";
 "Done" = "Xong";
+"Copied" = "Đã sao chép";
+"Nothing to copy" = "Không có gì để sao chép";

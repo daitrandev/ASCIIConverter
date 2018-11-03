@@ -17,3 +17,5 @@
 "Attention" = "주의!";
 "AttentionMessage" = "비주얼 ASCII 코드는 32에서 127 사이에 있습니다.";
 "Done" = "끝난";
+"Copied" = "복사";
+"Nothing to copy" = "복사 할 내용이 없습니다";

@@ -17,3 +17,5 @@
 "Attention" = "注意！";
 "AttentionMessage" = "ビジュアルASCIIコードは32〜127の間にあります。";
 "Done" = "完了";
+"Copied" = "コピー";
+"Nothing to copy" = "コピーするものはありません";

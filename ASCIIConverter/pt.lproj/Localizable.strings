@@ -17,3 +17,5 @@
 "Attention" = "Atenção!";
 "AttentionMessage" = "O código visual ASCII é apenas entre 32 e 127.";
 "Done" = "Está feito";
+"Copied" = "Copiado";
+"Nothing to copy" = "Nada para copiar";

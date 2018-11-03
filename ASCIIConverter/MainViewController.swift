@@ -11,48 +11,62 @@ import GoogleMobileAds
 
 class MainViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    //@IBOutlet weak var tableView: UITableView!
     
-    var textFieldArray: [UITextField?] = [UITextField?](repeating: nil, count: 5)
+    var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.showsVerticalScrollIndicator = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
     
-    let labelArray = ["TEXT", "ASCII", "BIN", "OCT", "HEX"]
+    let cellId = "cellId"
     
-    let allowingCharacters:[String] = ["", "0123456789 ", "01 ", "01234567 ", "0123456789aAbBcCdDeEfF "]
-    
-    let placeHolderArray = ["TEXT", "ASCII CODE", "BINARY CODE", "OCTAL CODE", "HEXADECIMAL CODE"]
+    var cellModels = [CellModel(labelText: "TEXT", textFieldPlaceHolderText: "TEXT", textFieldText: "" , keyboardType: .asciiCapable, allowingCharacters: "", base: 0, tag: 0),
+                      CellModel(labelText: "ASCII", textFieldPlaceHolderText: "ASCII CODE", textFieldText: "", keyboardType: .decimalPad, allowingCharacters: "0123456789 ", base: 10, tag: 1),
+                      CellModel(labelText: "BIN", textFieldPlaceHolderText: "BINARY CODE", textFieldText: "", keyboardType: .decimalPad, allowingCharacters: "01 ", base: 2, tag: 2),
+                      CellModel(labelText: "OCT", textFieldPlaceHolderText: "OCTAL CODE", textFieldText: "", keyboardType: .decimalPad, allowingCharacters: "01234567 ", base: 8, tag: 3),
+                      CellModel(labelText: "HEX", textFieldPlaceHolderText: "HEXADECIMAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789aAbBcCdDeEfF ", base: 16, tag: 4)]
     
     let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]
     
-    let baseArray:[Int] = [0, 10, 2, 8, 16]
+    var isLightTheme: Bool = UserDefaults.standard.bool(forKey: isLightThemeKey)
     
-    var currentThemeIndex: Int = 0
-    
-    let mainBackgroundColors:[UIColor] = [UIColor.white, UIColor.black]
+//    let mainBackgroundColors:[UIColor] = [UIColor.white, UIColor.black]
     
     let mainLabelColors: [UIColor] = [UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0), UIColor.orange]
     
     var showUpgradeAlert: Bool = false
     
-    var textFieldTagIsEditing: Int = 0
+//    var textFieldTagIsEditing: Int = 0
     
-    var freeVersion: Bool = false
+//    var freeVersion: Bool = false
     
     var bannerView: GADBannerView!
     
     var interstitial: GADInterstitial?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return currentThemeIndex == 0 ? .default : .lightContent
+        return isLightTheme ? .default : .lightContent
+    }
+    
+    fileprivate func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        view.addSubview(tableView)
+        _ = tableView.constraintTo(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, topConstant: 0, bottomConstant: 0, leftConstant: 0, rightConstant: 0)
+        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: cellId)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        tableView.dataSource = self
-        tableView.delegate = self
         
-        if (freeVersion) {
+        setupTableView()
+        
+        if (isFreeVersion) {
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
             
             bannerView.adUnitID = "ca-app-pub-7005013141953077/8210577141"
@@ -63,21 +77,23 @@ class MainViewController: UIViewController {
             interstitial = createAndLoadInterstitial()
         }
         
-        if let value = UserDefaults.standard.object(forKey: "ThemeIndex") as? Int {
-            currentThemeIndex = value
+        if let value = UserDefaults.standard.object(forKey: isLightThemeKey) as? Bool {
+            isLightTheme = value
         } else {
-            UserDefaults.standard.set(0, forKey: "ThemeIndex")
+            UserDefaults.standard.set(true, forKey: isLightThemeKey)
         }
         
-        loadColor()
+        loadTheme()
         
         navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "home"), style: .plain, target: self, action: #selector(onHomeAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "refresh"), style: .plain, target: self, action: #selector(onRefreshAction))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (freeVersion) {
-            presentAlert(titile: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+        if (isFreeVersion) {
+            presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
         }
     }
 
@@ -86,153 +102,22 @@ class MainViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func OnRefreshAction(_ sender: Any) {
-        for i in 0..<textFieldArray.count {
-            textFieldArray[i]?.text = ""
+    @objc func onRefreshAction() {
+        for i in 0..<cellModels.count {
+            cellModels[i].textFieldText = ""
+            (tableView.visibleCells[i] as? MainTableViewCell)?.cellModel = cellModels[i]
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let nav = segue.destination as? UINavigationController, let homeVC = nav.topViewController as? HomeViewController {
-            homeVC.delegate = self
-        }
-    }
-}
-
-extension MainViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return labelArray.count
+    @objc func onHomeAction() {
+        let homeViewController = HomeViewController()
+        let nav = UINavigationController(rootViewController: homeViewController)
+        homeViewController.delegate = self
+        present(nav, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MainTableViewCell
-        cell.backgroundColor = mainBackgroundColors[currentThemeIndex]
-        
-        cell.label?.backgroundColor = mainLabelColors[currentThemeIndex]
-        cell.label?.text = labelArray[indexPath.row]
-        cell.label?.makeRound()
-        
-        cell.textField?.tag            = indexPath.row
-        cell.textField?.delegate       = self
-        cell.textField?.placeholder    = placeHolderArray[indexPath.row]
-        textFieldArray[indexPath.row]  = cell.textField
-        cell.textField?.keyboardAppearance = keyboardAppearance[currentThemeIndex]
-        
-        cell.textField?.makeRound(borderColor: mainLabelColors[currentThemeIndex])
-        cell.textField?.addTarget(self, action: #selector(self.textFieldEditingChanged(_:)), for: .editingChanged)
-        
-        return cell
-    }
-}
-
-extension MainViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-        if (string == "" || textField.tag == 0) {
-            return true
-        }
-        
-        if (string == " " && textField.text?.last == " ") {
-            return false
-        }
-        
-        for char in string {
-            if (!allowingCharacters[textField.tag].contains(char)) {
-                return false
-            }
-        }
-        
-        return true
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        textFieldTagIsEditing = textField.tag
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func SetAllTextField0(exceptedIndex: Int) {
-        for i in 0..<textFieldArray.count {
-            if (i != exceptedIndex) {
-                textFieldArray[i]?.text = ""
-            }
-        }
-    }
-    
-    @objc func textFieldEditingChanged(_ sender: UITextField) {
-        
-        var numbers:[String] = []
-        
-        SetAllTextField0(exceptedIndex: sender.tag)
-
-        // Convert sender.text to number array
-        if (sender.tag == 0) {
-            for char in sender.text! {
-                if let asciiValue = char.asciiValue {
-                    numbers.append(String(asciiValue))
-                } else {
-                    SetAllTextField0(exceptedIndex: sender.tag)
-                    return
-                }
-            }
-        } else {
-            numbers = sender.text!.components(separatedBy: " ")
-            
-            if (sender.tag != 1) {
-                for i in 0..<numbers.count {
-                    let num = numbers[i].uppercased()
-                    if let base10 = Int(num, radix: baseArray[sender.tag]) {
-                        numbers[i] = String(base10)
-                    }
-                }
-            }
-        }
-        
-        // Convert number array to all bases
-        for num in numbers {
-            if let num = Int(num) {
-                for i in 1..<textFieldArray.count {
-                    if (i != sender.tag) {
-                        textFieldArray[i]!.text! += String(num, radix: baseArray[i]) + " "
-                    }
-                }
-            } else {
-                continue
-            }
-        }
-        
-        textFieldArray[4]?.text = textFieldArray[4]?.text?.uppercased()
-        
-        // Convert base10 to TEXT
-        if (sender.tag != 0) {
-            numbers = textFieldArray[1]!.text!.components(separatedBy: " ")
-            
-            for num in numbers {
-                if let num = Int(num) {
-                    if (num > 31 && num < 128) {
-                        textFieldArray[0]!.text! += String(describing: num.char)
-                    } else {
-                        if (num > 127 && !showUpgradeAlert) {
-                            presentAlert(titile: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("AttentionMessage", comment: ""), isUpgradeMessage: false)
-                            showUpgradeAlert = true
-                        }
-                        return
-                    }
-                } else {
-                    continue
-                }
-            }
-            showUpgradeAlert = false
-        }
-    }
-    
-    func presentAlert(titile: String, message: String, isUpgradeMessage: Bool) {
-        let alert = UIAlertController(title: titile, message: message, preferredStyle: .alert)
+    func presentAlert(title: String, message: String, isUpgradeMessage: Bool) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .cancel, handler: {(action) in
             self.setNeedsStatusBarAppearanceUpdate()
         }))
@@ -244,7 +129,7 @@ extension MainViewController: UITextFieldDelegate {
                 }
             }))
         }
-
+        
         present(alert, animated: true, completion: nil)
     }
     
@@ -261,19 +146,117 @@ extension MainViewController: UITextFieldDelegate {
     }
 }
 
-extension MainViewController: HomeViewControllerDelegate {
-    func loadColor() {
-        currentThemeIndex = UserDefaults.standard.integer(forKey: "ThemeIndex")
-        
-        self.tableView.backgroundColor = mainBackgroundColors[currentThemeIndex]
-        
-        navigationController?.navigationBar.barTintColor = mainBackgroundColors[currentThemeIndex]
-        
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: mainBackgroundColors[1 - currentThemeIndex]]
-        
-        navigationController?.navigationBar.tintColor = mainLabelColors[currentThemeIndex]
+extension MainViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cellModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MainTableViewCell
+        cell.cellModel = cellModels[indexPath.row]
+        cell.isLightTheme = isLightTheme
+        cell.delegate = self     
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 65
+    }
+}
 
-        view.backgroundColor = mainBackgroundColors[currentThemeIndex]
+extension MainViewController: MainTableViewCellDelegate {
+    func presentCopiedAlert(message: String) {
+        self.presentAlert(title: message, message: "", isUpgradeMessage: false)
+    }
+    
+    func updateCellModel(tag: Int, textFieldText: String) {
+        cellModels[tag].textFieldText = textFieldText
+    }
+    
+    func setAllTextField0(exceptedIndex: Int) {
+        for i in 0..<cellModels.count {
+            if (i != exceptedIndex) {
+                cellModels[i].textFieldText = ""
+                (tableView.visibleCells[i] as? MainTableViewCell)?.cellModel = cellModels[i]
+            }
+        }
+    }
+    
+    func convertToAllBases(exceptedIndex: Int, numbers: [String]) {
+        setAllTextField0(exceptedIndex: exceptedIndex)
+        // Convert number array to all bases
+        for num in numbers {
+            if let num = Int(num) {
+                for i in 1..<cellModels.count {
+                    if (i != exceptedIndex) {
+                        cellModels[i].textFieldText += String(num, radix: cellModels[i].base).uppercased() + " "
+                        (tableView.visibleCells[i] as? MainTableViewCell)?.cellModel = cellModels[i]
+                    }
+                }
+            }
+        }
+    }
+    
+    func convertASCIICodeToText() {
+        let numbers: [String] = cellModels[1].textFieldText.components(separatedBy: " ")
+        
+        for num in numbers {
+            if let num = Int(num) {
+                if (num > 31 && num < 128) {
+                    cellModels[0].textFieldText += String(describing: num.char)
+                } else {
+                    if (num > 127 && !showUpgradeAlert) {
+                        presentAlert(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("AttentionMessage", comment: ""), isUpgradeMessage: false)
+                        showUpgradeAlert = true
+                    }
+                    return
+                }
+            }
+        }
+        (tableView.visibleCells[0] as? MainTableViewCell)?.cellModel = cellModels[0]
+        showUpgradeAlert = false
+    }
+    
+    func convertTextToASCIICode(from textField: UITextField) -> [String]? {
+        var stringNumbers: [String] = []
+        cellModels[1].textFieldText = ""
+        for char in textField.text! {
+            if let asciiValue = char.asciiValue {
+                let stringNumber = String(asciiValue)
+                stringNumbers.append(stringNumber)
+                cellModels[1].textFieldText += stringNumber + " "
+            } else {
+                setAllTextField0(exceptedIndex: textField.tag)
+                return nil
+            }
+        }
+        (tableView.visibleCells[1] as? MainTableViewCell)?.cellModel = cellModels[1]
+        return stringNumbers
+    }
+}
+
+extension MainViewController: HomeViewControllerDelegate {
+    func loadThemeAndUpdateFormat() {
+        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
+        loadTheme()
+        for i in 0..<tableView.visibleCells.count {
+            (tableView.visibleCells[i] as? MainTableViewCell)?.isLightTheme = isLightTheme
+        }
+    }
+    
+    func presentUpgradeAlert() {
+        presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+    }
+    
+    func loadTheme() {
+        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
+        
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: isLightTheme ? UIColor.black : UIColor.white]
+        
+        navigationController?.navigationBar.barTintColor = isLightTheme ? .white : .black
+        navigationController?.navigationBar.tintColor = isLightTheme ? .greenCoral : .orange
+
+        view.backgroundColor = isLightTheme ? .white : .black
         
         setNeedsStatusBarAppearanceUpdate()
         

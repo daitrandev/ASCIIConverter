@@ -21,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         GADMobileAds.configure(withApplicationID: "ca-app-pub-7005013141953077~8677481003")
 
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        let nav = UINavigationController(rootViewController: MainViewController())
+        window?.rootViewController = nav
         return true
     }
 

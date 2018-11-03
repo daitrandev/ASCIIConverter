@@ -17,3 +17,5 @@
 "Attention" = "Perhatian!";
 "AttentionMessage" = "Kode ASCII visual hanya antara 32 dan 127.";
 "Done" = "Selesai";
+"Copied" = "Disalin";
+"Nothing to copy" = "Tidak ada yang perlu disalin";
