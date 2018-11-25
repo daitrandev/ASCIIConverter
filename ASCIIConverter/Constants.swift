@@ -9,4 +9,3 @@
 import Foundation
 
 let isLightThemeKey: String = "isLightTheme"
-let isFreeVersion: Bool = true

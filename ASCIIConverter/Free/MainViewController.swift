@@ -66,16 +66,14 @@ class MainViewController: UIViewController {
         
         setupTableView()
         
-        if (isFreeVersion) {
-            bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-            
-            bannerView.adUnitID = "ca-app-pub-7005013141953077/8210577141"
-            bannerView.rootViewController = self
-            bannerView.load(GADRequest())
-            bannerView.delegate = self
-            
-            interstitial = createAndLoadInterstitial()
-        }
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        
+        bannerView.adUnitID = "ca-app-pub-7005013141953077/8210577141"
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        bannerView.delegate = self
+        
+        interstitial = createAndLoadInterstitial()
         
         if let value = UserDefaults.standard.object(forKey: isLightThemeKey) as? Bool {
             isLightTheme = value
@@ -92,9 +90,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if (isFreeVersion) {
-            presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
-        }
+        presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
     }
 
     override func didReceiveMemoryWarning() {

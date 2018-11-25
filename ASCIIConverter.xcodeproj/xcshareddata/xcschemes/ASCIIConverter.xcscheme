@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1010"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "23C1350B1FA865A500659196"
+               BlueprintIdentifier = "23F7CBAD21AA2F9A001CC3C4"
                BuildableName = "ASCIIConverter.app"
                BlueprintName = "ASCIIConverter"
                ReferencedContainer = "container:ASCIIConverter.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "23C1350B1FA865A500659196"
+            BlueprintIdentifier = "23F7CBAD21AA2F9A001CC3C4"
             BuildableName = "ASCIIConverter.app"
             BlueprintName = "ASCIIConverter"
             ReferencedContainer = "container:ASCIIConverter.xcodeproj">
@@ -42,10 +42,9 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      language = "vi"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -56,7 +55,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "23C1350B1FA865A500659196"
+            BlueprintIdentifier = "23F7CBAD21AA2F9A001CC3C4"
             BuildableName = "ASCIIConverter.app"
             BlueprintName = "ASCIIConverter"
             ReferencedContainer = "container:ASCIIConverter.xcodeproj">
@@ -75,7 +74,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "23C1350B1FA865A500659196"
+            BlueprintIdentifier = "23F7CBAD21AA2F9A001CC3C4"
             BuildableName = "ASCIIConverter.app"
             BlueprintName = "ASCIIConverter"
             ReferencedContainer = "container:ASCIIConverter.xcodeproj">

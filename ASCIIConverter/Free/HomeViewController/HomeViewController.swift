@@ -46,18 +46,14 @@ class HomeViewController: UIViewController {
     }
     
     func setupAds() {
-        if isFreeVersion {
-            bannerView = createAndLoadBannerView()
-        }
+        bannerView = createAndLoadBannerView()
     }
     
     @objc func closedButtonAction() {
         delegate?.loadThemeAndUpdateFormat()
         dismiss(animated: true) {
             self.delegate?.loadThemeAndUpdateFormat()
-            if isFreeVersion {
-                self.delegate?.presentUpgradeAlert()
-            }
+            self.delegate?.presentUpgradeAlert()
         }
     }
     
@@ -107,7 +103,7 @@ extension HomeViewController: HomeViewDelegate {
     }
     
     func presentShareAction() {
-        let appId = isFreeVersion ? "id1286627577" : "id1308862883"
+        let appId = "id1286627577"
         let message: String = "https://itunes.apple.com/app/\(appId)"
         let vc = UIActivityViewController(activityItems: [message], applicationActivities: [])
         vc.popoverPresentationController?.sourceView = self.view
@@ -127,7 +123,7 @@ extension HomeViewController: HomeViewDelegate {
     }
     
     func presentRatingAction() {
-        let appId = isFreeVersion ? "id1286627577" : "id1308862883"
+        let appId = "id1286627577"
         rateApp(appId: appId) { success in
             print("RateApp \(success)")
         }
