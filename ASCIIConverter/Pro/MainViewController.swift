@@ -25,9 +25,9 @@ class MainViewController: UIViewController {
     let cellId = "cellId"
     
     var cellModels = [CellModel(labelText: "TEXT", textFieldPlaceHolderText: "TEXT", textFieldText: "" , keyboardType: .asciiCapable, allowingCharacters: "", base: 0, tag: 0),
-                      CellModel(labelText: "ASCII", textFieldPlaceHolderText: "ASCII CODE", textFieldText: "", keyboardType: .decimalPad, allowingCharacters: "0123456789 ", base: 10, tag: 1),
-                      CellModel(labelText: "BIN", textFieldPlaceHolderText: "BINARY CODE", textFieldText: "", keyboardType: .decimalPad, allowingCharacters: "01 ", base: 2, tag: 2),
-                      CellModel(labelText: "OCT", textFieldPlaceHolderText: "OCTAL CODE", textFieldText: "", keyboardType: .decimalPad, allowingCharacters: "01234567 ", base: 8, tag: 3),
+                      CellModel(labelText: "ASCII", textFieldPlaceHolderText: "ASCII CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789 ", base: 10, tag: 1),
+                      CellModel(labelText: "BIN", textFieldPlaceHolderText: "BINARY CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01 ", base: 2, tag: 2),
+                      CellModel(labelText: "OCT", textFieldPlaceHolderText: "OCTAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01234567 ", base: 8, tag: 3),
                       CellModel(labelText: "HEX", textFieldPlaceHolderText: "HEXADECIMAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789aAbBcCdDeEfF ", base: 16, tag: 4)]
     
     let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]

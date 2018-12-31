@@ -81,7 +81,7 @@
 		23F17A761FB071500088E951 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		23F516D92155F47500A30FF9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		23F7CBC421AA2F9A001CC3C4 /* ASCIIConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCIIConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		23F7CBC521AA2F9A001CC3C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/dai/Desktop/ASCIIConverter/ASCIIConverter/Info.plist; sourceTree = "<absolute>"; };
+		23F7CBC521AA2F9A001CC3C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23F7CBC621AA3029001CC3C4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +148,7 @@
 			children = (
 				23C1350E1FA865A500659196 /* ASCIIConverter */,
 				23C1350D1FA865A500659196 /* Products */,
+				9871A47592F8749DB4F625EF /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,6 +195,13 @@
 				23E1182221841F5A00C1CAD0 /* CellModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		9871A47592F8749DB4F625EF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

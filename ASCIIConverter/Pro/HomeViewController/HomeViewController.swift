@@ -127,7 +127,7 @@ extension HomeViewController:  MFMailComposeViewControllerDelegate {
         mailComposerVC.mailComposeDelegate = self
         
         mailComposerVC.setToRecipients(["universappteam@gmail.com"])
-        mailComposerVC.setSubject("[Base-Converter++ Feedback]")
+        mailComposerVC.setSubject("[ASCII-Converter++ Feedback]")
         
         return mailComposerVC
     }
