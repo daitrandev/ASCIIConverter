@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SideMenu
+import MessageUI
 import GoogleMobileAds
 
 class MainViewController: UIViewController {
@@ -25,11 +27,11 @@ class MainViewController: UIViewController {
     
     let cellId = "cellId"
     
-    var cellModels = [CellModel(labelText: "TEXT", textFieldPlaceHolderText: "TEXT", textFieldText: "" , keyboardType: .asciiCapable, allowingCharacters: "", base: 0, tag: 0),
-                      CellModel(labelText: "ASCII", textFieldPlaceHolderText: "ASCII CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789 ", base: 10, tag: 1),
-                      CellModel(labelText: "BIN", textFieldPlaceHolderText: "BINARY CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01 ", base: 2, tag: 2),
-                      CellModel(labelText: "OCT", textFieldPlaceHolderText: "OCTAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01234567 ", base: 8, tag: 3),
-                      CellModel(labelText: "HEX", textFieldPlaceHolderText: "HEXADECIMAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789aAbBcCdDeEfF ", base: 16, tag: 4)]
+    var cellModels = [BaseModel(labelText: "TEXT", textFieldPlaceHolderText: "TEXT", textFieldText: "" , keyboardType: .asciiCapable, allowingCharacters: "", base: 0, tag: 0),
+                      BaseModel(labelText: "ASCII", textFieldPlaceHolderText: "ASCII CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789 ", base: 10, tag: 1),
+                      BaseModel(labelText: "BIN", textFieldPlaceHolderText: "BINARY CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01 ", base: 2, tag: 2),
+                      BaseModel(labelText: "OCT", textFieldPlaceHolderText: "OCTAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01234567 ", base: 8, tag: 3),
+                      BaseModel(labelText: "HEX", textFieldPlaceHolderText: "HEXADECIMAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789aAbBcCdDeEfF ", base: 16, tag: 4)]
     
     let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]
     
@@ -43,6 +45,8 @@ class MainViewController: UIViewController {
     
     var interstitial: GADInterstitial?
     
+    let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool
+        
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return isLightTheme ? .default : .lightContent
     }
@@ -60,14 +64,17 @@ class MainViewController: UIViewController {
         
         setupTableView()
         
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        
-        bannerView.adUnitID = "ca-app-pub-7005013141953077/8210577141"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-        bannerView.delegate = self
-        
-        interstitial = createAndLoadInterstitial()
+        guard let isFreeVersion = isFreeVersion else { return }
+        if isFreeVersion {
+            bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+            
+            bannerView.adUnitID = "ca-app-pub-7005013141953077/8210577141"
+            bannerView.rootViewController = self
+            bannerView.load(GADRequest())
+            bannerView.delegate = self
+            
+            interstitial = createAndLoadInterstitial()
+        }
         
         if let value = UserDefaults.standard.object(forKey: isLightThemeKey) as? Bool {
             isLightTheme = value
@@ -84,7 +91,11 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+        
+        guard let isFreeVersion = isFreeVersion else { return }
+        if isFreeVersion {
+            presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,10 +111,30 @@ class MainViewController: UIViewController {
     }
     
     @objc func onHomeAction() {
-        let homeViewController = HomeViewController()
-        let nav = UINavigationController(rootViewController: homeViewController)
-        homeViewController.delegate = self
-        present(nav, animated: true)
+        let menuViewController = MenuViewController()
+        menuViewController.delegate = self
+        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: menuViewController)
+        
+        SideMenuManager.default.menuLeftNavigationController?.navigationBar.backgroundColor = .green
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
+        SideMenuManager.default.menuFadeStatusBar = false
+        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+    }
+    
+    func loadTheme() {
+        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
+        
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: isLightTheme ? UIColor.black : UIColor.white]
+        
+        navigationController?.navigationBar.barTintColor = isLightTheme ? .white : .black
+        navigationController?.navigationBar.tintColor = isLightTheme ? .greenCoral : .orange
+        
+        view.backgroundColor = isLightTheme ? .white : .black
+        
+        setNeedsStatusBarAppearanceUpdate()
+        
+        tableView.reloadData()
     }
     
     func presentAlert(title: String, message: String, isUpgradeMessage: Bool) {
@@ -225,32 +256,49 @@ extension MainViewController: MainTableViewCellDelegate {
     }
 }
 
-extension MainViewController: HomeViewControllerDelegate {
-    func loadThemeAndUpdateFormat() {
-        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
+extension MainViewController: MenuViewControllerDelegate {
+    func changeTheme() {
+        isLightTheme = !isLightTheme
+        UserDefaults.standard.set(isLightTheme, forKey: isLightThemeKey)
         loadTheme()
-        for i in 0..<tableView.visibleCells.count {
-            (tableView.visibleCells[i] as? MainTableViewCell)?.isLightTheme = isLightTheme
+    }
+    
+    func presentMailComposeViewController() {
+        let mailComposeViewController = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.present(mailComposeViewController, animated: true, completion: nil)
         }
     }
     
-    func presentUpgradeAlert() {
-        presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+    func presentRatingAction() {
+        let appId = "id1286627577"
+        rateApp(appId: appId) { success in
+            print("RateApp \(success)")
+        }
     }
     
-    func loadTheme() {
-        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
-        
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: isLightTheme ? UIColor.black : UIColor.white]
-        
-        navigationController?.navigationBar.barTintColor = isLightTheme ? .white : .black
-        navigationController?.navigationBar.tintColor = isLightTheme ? .greenCoral : .orange
+    func presentShareAction() {
+        let appId = "id1286627577"
+        let message: String = "https://itunes.apple.com/app/\(appId)"
+        let vc = UIActivityViewController(activityItems: [message], applicationActivities: [])
+        vc.popoverPresentationController?.sourceView = self.view
+        present(vc, animated: true)
+    }
+}
 
-        view.backgroundColor = isLightTheme ? .white : .black
+extension MainViewController:  MFMailComposeViewControllerDelegate {
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self
         
-        setNeedsStatusBarAppearanceUpdate()
+        mailComposerVC.setToRecipients(["universappteam@gmail.com"])
+        mailComposerVC.setSubject("[ASCII-Converter++ Feedback]")
         
-        tableView.reloadData()
+        return mailComposerVC
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }
 

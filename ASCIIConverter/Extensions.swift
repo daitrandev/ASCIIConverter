@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SideMenu
 
 extension UIView {
     func constraintTo(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, right: NSLayoutXAxisAnchor?, topConstant: CGFloat, bottomConstant: CGFloat, leftConstant: CGFloat, rightConstant: CGFloat) {
@@ -31,7 +32,7 @@ extension UIView {
 
 extension UINavigationController {
     open override var childForStatusBarStyle: UIViewController? {
-        return visibleViewController
+        return topViewController
     }
 }
 
@@ -55,4 +56,11 @@ extension UILabel {
 
 extension UIColor {
     static let greenCoral = UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0)
+}
+
+extension UIImage {
+    convenience init?(menuSection: MenuSection, theme: Theme) {
+        let menuIconName = menuSection.rawValue + "-" + theme.rawValue
+        self.init(named: menuIconName)
+    }
 }

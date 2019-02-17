@@ -54,7 +54,7 @@ class MainTableViewCell: UITableViewCell {
         return button
     }()
 
-    var cellModel: CellModel? {
+    var cellModel: BaseModel? {
         didSet {
             guard let cellModel = cellModel else { return }
             label.text = cellModel.labelText
@@ -64,7 +64,7 @@ class MainTableViewCell: UITableViewCell {
             textField.tag = cellModel.tag
         }
     }
-    
+        
     var isLightTheme: Bool? {
         didSet {
             guard let isLightTheme = isLightTheme else { return }
@@ -78,20 +78,27 @@ class MainTableViewCell: UITableViewCell {
     
     var delegate: MainTableViewCellDelegate?
     
+    let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool
+    
     fileprivate func setupLayout() {
         addSubview(label)
         addSubview(textField)
-        addSubview(copyButton)
         
         label.constraintTo(top: topAnchor, bottom: bottomAnchor, left: contentView.leftAnchor, right: nil, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
-        label.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25).isActive = true
+        label.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
-        textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: copyButton.leftAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
-        
-        copyButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
-        copyButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
-        copyButton.widthAnchor.constraint(equalTo: copyButton.heightAnchor).isActive = true
-        copyButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        guard let isFreeVersion = isFreeVersion else { return }
+        if isFreeVersion {
+            textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: contentView.rightAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
+        } else {
+            addSubview(copyButton)
+            textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: copyButton.leftAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
+
+            copyButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+            copyButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
+            copyButton.widthAnchor.constraint(equalTo: copyButton.heightAnchor).isActive = true
+            copyButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        }
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -107,6 +114,10 @@ class MainTableViewCell: UITableViewCell {
         } else {
             delegate?.presentCopiedAlert(message: NSLocalizedString("Nothing to copy", comment: ""))
         }
+    }
+    
+    func loadTheme() {
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

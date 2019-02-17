@@ -8,6 +8,7 @@ target 'ASCIIConverterFree' do
   # Pods for ASCIIConverter
   pod 'Google-Mobile-Ads-SDK'
   pod 'IQKeyboardManagerSwift'
+  pod 'SideMenu'
 end
 
 target 'ASCIIConverter' do
@@ -15,6 +16,7 @@ target 'ASCIIConverter' do
   use_frameworks!
 
   # Pods for ASCIIConverter
-  #pod 'Google-Mobile-Ads-SDK'
+  pod 'Google-Mobile-Ads-SDK'
   pod 'IQKeyboardManagerSwift'
+  pod 'SideMenu'
 end

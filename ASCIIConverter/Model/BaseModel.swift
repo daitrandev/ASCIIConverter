@@ -6,9 +6,8 @@
 //  Copyright © 2018 DaiTranDev. All rights reserved.
 //
 import UIKit
-import Foundation
 
-struct CellModel {
+struct BaseModel {
     var labelText: String
     var textFieldPlaceHolderText: String
     var textFieldText: String
