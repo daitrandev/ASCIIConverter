@@ -51,11 +51,16 @@ class MenuViewController: UIViewController {
         
         view.addSubview(tableView)
         tableView.constraintTo(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, topConstant: 0, bottomConstant: 0, leftConstant: 0, rightConstant: 0)
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadTheme()
     }
     
     func loadTheme() {
+        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
+        
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: isLightTheme ? UIColor.black : UIColor.white]
         
         navigationController?.navigationBar.barTintColor = isLightTheme ? .white : .black
