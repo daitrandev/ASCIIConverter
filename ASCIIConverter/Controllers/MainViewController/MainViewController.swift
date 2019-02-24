@@ -271,14 +271,14 @@ extension MainViewController: MenuViewControllerDelegate {
     }
     
     func presentRatingAction() {
-        let appId = "id1286627577"
+        let appId = isFreeVersion ? "id1286627577" : "id1308862883"
         rateApp(appId: appId) { success in
             print("RateApp \(success)")
         }
     }
     
     func presentShareAction() {
-        let appId = "id1286627577"
+        let appId = isFreeVersion ? "id1286627577" : "id1308862883"
         let message: String = "https://itunes.apple.com/app/\(appId)"
         let vc = UIActivityViewController(activityItems: [message], applicationActivities: [])
         vc.popoverPresentationController?.sourceView = self.view
