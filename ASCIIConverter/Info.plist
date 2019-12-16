@@ -17,7 +17,9 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.2</string>
 	<key>CFBundleVersion</key>
-	<string>10</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-7005013141953077~8677481003</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
@@ -43,7 +45,5 @@
 	<true/>
 	<key>isFreeVersion</key>
 	<false/>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-7005013141953077~8677481003</string>
 </dict>
 </plist>
