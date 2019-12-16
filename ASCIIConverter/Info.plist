@@ -43,5 +43,7 @@
 	<true/>
 	<key>isFreeVersion</key>
 	<false/>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-7005013141953077~8677481003</string>
 </dict>
 </plist>

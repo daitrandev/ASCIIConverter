@@ -45,7 +45,7 @@ class MainViewController: UIViewController {
     
     var interstitial: GADInterstitial?
     
-    let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool
+    let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool ?? true
         
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return isLightTheme ? .default : .lightContent
@@ -64,11 +64,10 @@ class MainViewController: UIViewController {
         
         setupTableView()
         
-        guard let isFreeVersion = isFreeVersion else { return }
         if isFreeVersion {
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-            
-            bannerView.adUnitID = "ca-app-pub-7005013141953077/8210577141"
+            let adUnitId = isDebug ? bannerAdsUnitIDTrial : bannerAdsUnitID
+            bannerView.adUnitID = adUnitId
             bannerView.rootViewController = self
             bannerView.load(GADRequest())
             bannerView.delegate = self
@@ -92,7 +91,6 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let isFreeVersion = isFreeVersion else { return }
         if isFreeVersion {
             presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
         }
@@ -325,7 +323,8 @@ extension MainViewController : GADBannerViewDelegate {
 
 extension MainViewController : GADInterstitialDelegate {
     private func createAndLoadInterstitial() -> GADInterstitial? {
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-7005013141953077/5926785468")
+        let adUnitId: String = isDebug ? interstialAdsUnitIDTrial : interstialAdsUnitID
+        interstitial = GADInterstitial(adUnitID: adUnitId)
         
         guard let interstitial = interstitial else {
             return nil
@@ -333,7 +332,6 @@ extension MainViewController : GADInterstitialDelegate {
         
         let request = GADRequest()
         // Remove the following line before you upload the app
-        request.testDevices = [ kGADSimulatorID ]
         interstitial.load(request)
         interstitial.delegate = self
         

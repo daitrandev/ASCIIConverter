@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-7005013141953077~8677481003")
         window = UIWindow()
         window?.makeKeyAndVisible()
         let nav = UINavigationController(rootViewController: MainViewController())
