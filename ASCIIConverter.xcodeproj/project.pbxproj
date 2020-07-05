@@ -116,8 +116,7 @@
 				23361BBD21855D4C00DC6D95 /* Assets.xcassets */,
 				FA0CF3C921FD770500A42D2E /* Controllers */,
 				F83E327724B041DA006142FE /* Extensions */,
-				23F17A741FB0714B0088E951 /* InfoPlist.strings */,
-				23F17A711FB071450088E951 /* Localizable.strings */,
+				F8406B7324B1D099001A5C03 /* Resources */,
 				F8406B6D24B1BFFB001A5C03 /* Utils */,
 				23E11820218418CC00C1CAD0 /* Views */,
 			);
@@ -161,6 +160,15 @@
 				F8406B6E24B1C006001A5C03 /* URLHandler.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		F8406B7324B1D099001A5C03 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				23F17A741FB0714B0088E951 /* InfoPlist.strings */,
+				23F17A711FB071450088E951 /* Localizable.strings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		FA0CF3C921FD770500A42D2E /* Controllers */ = {

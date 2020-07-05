@@ -1,0 +1,17 @@
+/* 
+  Localizable.strings
+  GCF & GCM Calculator++
+
+  Created by Dai Tran on 10/30/17.
+  Copyright © 2017 DaiTranDev. All rights reserved.
+*/
+
+"UpgradeMessage" = "Aggiorna a Convertitore ASCII++ e puoi utilizzare senza annunci.";
+"Upgrade" = "Aggiornamento";
+"Appname" = "Convertitore ASCII++";
+"MainTitle" = "Convertitore ASCII";
+"Attention" = "Attenzione!";
+"AttentionMessage" = "Il codice ASCII visivo è solo tra 32 e 127.";
+"Done" = "Fatto";
+"Copied" = "Copiato";
+"Nothing to copy" = "Niente da copiare";
