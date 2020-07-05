@@ -6,6 +6,10 @@
 //  Copyright © 2020 DaiTranDev. All rights reserved.
 //
 
+protocol MainViewModelDelegate: class {
+    func reloadTableView()
+}
+
 protocol MainViewModelType: class {
     var cellLayoutItems: [MainViewModel.CellLayoutItem] { get set }
 }
@@ -20,8 +24,16 @@ class MainViewModel: MainViewModelType {
         let tag: Int
     }
     
-    var cellLayoutItems: [CellLayoutItem] = {
-        [
+    var cellLayoutItems: [CellLayoutItem] {
+        didSet {
+            delegate?.reloadTableView()
+        }
+    }
+    
+    weak var delegate: MainViewModelDelegate?
+    
+    init() {
+        cellLayoutItems = [
             CellLayoutItem(
                 baseName: "TEXT",
                 placeHolder: "TEXT",
@@ -63,5 +75,5 @@ class MainViewModel: MainViewModelType {
                 tag: 4
             )
         ]
-    }()
+    }
 }

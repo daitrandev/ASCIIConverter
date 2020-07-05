@@ -25,9 +25,7 @@ class MainViewController: UIViewController {
     private let cellId = "cellId"
         
     private let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]
-    
-    private var isLightTheme: Bool = UserDefaults.standard.bool(forKey: isLightThemeKey)
-        
+            
     private let mainLabelColors: [UIColor] = [UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0), UIColor.orange]
     
     private var showUpgradeAlert: Bool = false
@@ -39,10 +37,6 @@ class MainViewController: UIViewController {
     private let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool ?? true
     
     private let viewModel: MainViewModelType
-        
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return isLightTheme ? .default : .lightContent
-    }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         viewModel = MainViewModel()
@@ -80,12 +74,6 @@ class MainViewController: UIViewController {
             interstitial = createAndLoadInterstitial()
         }
         
-        if let value = UserDefaults.standard.object(forKey: isLightThemeKey) as? Bool {
-            isLightTheme = value
-        } else {
-            UserDefaults.standard.set(true, forKey: isLightThemeKey)
-        }
-        
         loadTheme()
         
         navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
@@ -121,13 +109,6 @@ class MainViewController: UIViewController {
     }
     
     func loadTheme() {
-        isLightTheme = UserDefaults.standard.bool(forKey: isLightThemeKey)
-        
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: isLightTheme ? UIColor.black : UIColor.white]
-        
-        navigationController?.navigationBar.barTintColor = isLightTheme ? .white : .black
-        navigationController?.navigationBar.tintColor = isLightTheme ? .greenCoral : .orange
-        
         if #available(iOS 13, *) {
             view.backgroundColor = .systemBackground
             navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
@@ -167,11 +148,8 @@ class MainViewController: UIViewController {
             completion(false)
             return
         }
-        guard #available(iOS 10, *) else {
-            completion(UIApplication.shared.openURL(url))
-            return
-        }
-        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: completion)
+        
+        URLHandler.open(url: url)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -197,6 +175,20 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension MainViewController: MainViewModelDelegate {
+    func reloadTableView() {
+        guard let visibleCells = tableView.visibleCells as? [MainTableViewCell] else { return }
+        
+        for cell in visibleCells {
+            guard let indexPath = tableView.indexPath(for: cell) else {
+                return
+            }
+            let item = viewModel.cellLayoutItems[indexPath.row]
+            cell.configure(with: item)
+        }
+    }
+}
+
 extension MainViewController: MainTableViewCellDelegate {
     func presentCopiedAlert(message: String) {
         self.presentAlert(title: message, message: "", isUpgradeMessage: false)
@@ -207,12 +199,12 @@ extension MainViewController: MainTableViewCellDelegate {
     }
     
     func setAllBaseToEmpty(exceptedIndex: Int) {
-        for i in 0..<viewModel.cellLayoutItems.count {
-            if (i != exceptedIndex) {
-                viewModel.cellLayoutItems[i].content = ""
+        for index in 0..<viewModel.cellLayoutItems.count {
+            if (index != exceptedIndex) {
+                viewModel.cellLayoutItems[index].content = ""
             }
         }
-        tableView.reloadData()
+        reloadTableView()
     }
     
     func convertToAllBases(exceptedIndex: Int, numbers: [String]) {
@@ -227,7 +219,7 @@ extension MainViewController: MainTableViewCellDelegate {
                 }
             }
         }
-        tableView.reloadData()
+        reloadTableView()
     }
     
     func convertASCIICodeToText() {
@@ -246,7 +238,7 @@ extension MainViewController: MainTableViewCellDelegate {
                 }
             }
         }
-        tableView.reloadData()
+        reloadTableView()
         showUpgradeAlert = false
     }
     
@@ -263,18 +255,12 @@ extension MainViewController: MainTableViewCellDelegate {
                 return nil
             }
         }
-        tableView.reloadData()
+        reloadTableView()
         return stringNumbers
     }
 }
 
 extension MainViewController: MenuViewControllerDelegate {
-    func changeTheme() {
-        isLightTheme = !isLightTheme
-        UserDefaults.standard.set(isLightTheme, forKey: isLightThemeKey)
-        loadTheme()
-    }
-    
     func presentMailComposeViewController() {
         let mailComposeViewController = configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
@@ -355,9 +341,4 @@ extension MainViewController : GADInterstitialDelegate {
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         ad.present(fromRootViewController: self)
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }
