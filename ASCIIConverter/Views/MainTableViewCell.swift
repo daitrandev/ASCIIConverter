@@ -38,6 +38,7 @@ class MainTableViewCell: UITableViewCell {
         textField.textAlignment = .center
         textField.layer.masksToBounds = true
         textField.backgroundColor = .white
+        textField.textColor = .black
         textField.delegate = self
         textField.returnKeyType = .done
         textField.keyboardType = .asciiCapable

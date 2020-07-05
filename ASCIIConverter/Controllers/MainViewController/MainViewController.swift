@@ -77,7 +77,6 @@ class MainViewController: UIViewController {
         loadTheme()
         
         navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "home"), style: .plain, target: self, action: #selector(onHomeAction))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "refresh"), style: .plain, target: self, action: #selector(onRefreshAction))
     }
     
@@ -94,18 +93,6 @@ class MainViewController: UIViewController {
             viewModel.cellLayoutItems[i].content = ""
         }
         tableView.reloadData()
-    }
-    
-    @objc func onHomeAction() {
-        let menuViewController = MenuViewController()
-        menuViewController.delegate = self
-        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: menuViewController)
-        
-        SideMenuManager.default.menuLeftNavigationController?.navigationBar.backgroundColor = .green
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        SideMenuManager.default.menuFadeStatusBar = false
-        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
-        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
     func loadTheme() {
@@ -257,30 +244,6 @@ extension MainViewController: MainTableViewCellDelegate {
         }
         reloadTableView()
         return stringNumbers
-    }
-}
-
-extension MainViewController: MenuViewControllerDelegate {
-    func presentMailComposeViewController() {
-        let mailComposeViewController = configuredMailComposeViewController()
-        if MFMailComposeViewController.canSendMail() {
-            self.present(mailComposeViewController, animated: true, completion: nil)
-        }
-    }
-    
-    func presentRatingAction() {
-        let appId = isFreeVersion ? "id1286627577" : "id1308862883"
-        rateApp(appId: appId) { success in
-            print("RateApp \(success)")
-        }
-    }
-    
-    func presentShareAction() {
-        let appId = isFreeVersion ? "id1286627577" : "id1308862883"
-        let message: String = "https://itunes.apple.com/app/\(appId)"
-        let vc = UIActivityViewController(activityItems: [message], applicationActivities: [])
-        vc.popoverPresentationController?.sourceView = self.view
-        present(vc, animated: true)
     }
 }
 
