@@ -5,11 +5,7 @@
   Created by Dai Tran on 10/30/17.
   Copyright © 2017 DaiTranDev. All rights reserved.
 */
-"Menu" = "Page d'accueil";
-"Theme" = "Thème";
-"Feedback" = "Retour d'information";
-"Rate" = "Évaluer";
-"Share" = "Partager";
+
 "UpgradeMessage" = "Mise à niveau vers Calculer le Convertisseur ASCII++, vous pouvez utiliser sans publicité.";
 "Upgrade" = "Surclassement";
 "Appname" = "Convertisseur ASCII++";

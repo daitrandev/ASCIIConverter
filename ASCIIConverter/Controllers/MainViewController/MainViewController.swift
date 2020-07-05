@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SideMenu
 import MessageUI
 import GoogleMobileAds
 
@@ -23,11 +22,7 @@ class MainViewController: UIViewController {
     }()
     
     private let cellId = "cellId"
-        
-    private let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]
-            
-    private let mainLabelColors: [UIColor] = [UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0), UIColor.orange]
-    
+                
     private var showUpgradeAlert: Bool = false
     
     private var bannerView: GADBannerView!
@@ -58,11 +53,7 @@ class MainViewController: UIViewController {
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: cellId)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupTableView()
-        
+    private func setupAdsViews() {
         if isFreeVersion {
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
             let adUnitId = isDebug ? bannerAdsUnitIDTrial : bannerAdsUnitID
@@ -73,11 +64,23 @@ class MainViewController: UIViewController {
             
             interstitial = createAndLoadInterstitial()
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupTableView()
+        setupAdsViews()
         
         loadTheme()
         
         navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "refresh"), style: .plain, target: self, action: #selector(onRefreshAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "refresh"),
+            style: .plain,
+            target: self,
+            action: #selector(onRefreshAction)
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,10 +92,10 @@ class MainViewController: UIViewController {
     }
     
     @objc func onRefreshAction() {
-        for i in 0..<viewModel.cellLayoutItems.count {
-            viewModel.cellLayoutItems[i].content = ""
+        for index in 0..<viewModel.cellLayoutItems.count {
+            viewModel.cellLayoutItems[index].content = ""
         }
-        tableView.reloadData()
+        reloadTableView()
     }
     
     func loadTheme() {
@@ -113,18 +116,34 @@ class MainViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func presentAlert(title: String, message: String, isUpgradeMessage: Bool) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Done", comment: ""), style: .cancel, handler: {(action) in
-            self.setNeedsStatusBarAppearanceUpdate()
-        }))
-        if (isUpgradeMessage) {
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Upgrade", comment: ""), style: .default, handler: { (action) in
-                self.setNeedsStatusBarAppearanceUpdate()
-                self.rateApp(appId: "id1308862883") { success in
-                    print("RateApp \(success)")
-                }
-            }))
+    func presentAlert(title: String,
+                      message: String,
+                      isUpgradeMessage: Bool) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addAction(
+            UIAlertAction(
+                title: NSLocalizedString("Done", comment: ""),
+                style: .cancel,
+                handler: { _ in self.setNeedsStatusBarAppearanceUpdate() }
+            )
+        )
+        if isUpgradeMessage {
+            alert.addAction(
+                UIAlertAction(
+                    title: NSLocalizedString("Upgrade", comment: ""),
+                    style: .default,
+                    handler: { _ in
+                        self.setNeedsStatusBarAppearanceUpdate()
+                        self.rateApp(appId: "id1308862883") { success in
+                            print("RateApp \(success)")
+                        }
+                    }
+                )
+            )
         }
         
         present(alert, animated: true, completion: nil)

@@ -5,11 +5,7 @@
   Created by Dai Tran on 10/30/17.
   Copyright © 2017 DaiTranDev. All rights reserved.
 */
-"Menu" = "Menu";
-"Theme" = "Chủ đề";
-"Feedback" = "Phản hồi";
-"Rate" = "Đánh giá";
-"Share" = "Chia sẻ";
+
 "UpgradeMessage" = "Nâng cấp lên Chuyển đổi ASCII++ sau đó bạn có thể sử dụng mà không có quảng cáo.";
 "Upgrade" = "Nâng cấp";
 "Appname" = "Chuyển đổi ASCII++";

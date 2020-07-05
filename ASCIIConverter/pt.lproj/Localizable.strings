@@ -5,11 +5,7 @@
   Created by Dai Tran on 10/30/17.
   Copyright © 2017 DaiTranDev. All rights reserved.
 */
-"Menu" = "Menu";
-"Theme" = "Tema";
-"Feedback" = "Comentários";
-"Rate" = "Avalie";
-"Share" = "Compartilhar";
+
 "UpgradeMessage" = "Atualize para ASCII Converter++, então você pode usar sem anúncios.";
 "Upgrade" = "Atualizar";
 "Appname" = "Conversor ASCII++";
