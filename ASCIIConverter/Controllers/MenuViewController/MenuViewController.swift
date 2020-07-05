@@ -12,7 +12,6 @@ protocol MenuViewControllerDelegate {
     func presentMailComposeViewController()
     func presentRatingAction()
     func presentShareAction()
-    func changeTheme()
 }
 
 class MenuViewController: UIViewController {
@@ -70,7 +69,6 @@ class MenuViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
 
         tableView.reloadData()
-        
     }
 }
 

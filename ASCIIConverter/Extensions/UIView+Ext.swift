@@ -6,6 +6,8 @@
 //  Copyright © 2020 DaiTranDev. All rights reserved.
 //
 
+import UIKit
+
 extension UIView {
     func constraintTo(top: NSLayoutYAxisAnchor?, bottom: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, right: NSLayoutXAxisAnchor?, topConstant: CGFloat = 0, bottomConstant: CGFloat = 0, leftConstant: CGFloat = 0, rightConstant: CGFloat = 0) {
         

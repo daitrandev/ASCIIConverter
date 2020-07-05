@@ -6,6 +6,8 @@
 //  Copyright © 2020 DaiTranDev. All rights reserved.
 //
 
+import UIKit
+
 extension UILabel {
     func makeRound() {
         self.clipsToBounds = true
