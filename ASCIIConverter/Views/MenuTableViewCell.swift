@@ -9,23 +9,22 @@
 import UIKit
 
 class MenuTableViewCell: UITableViewCell {
-    
-    var cellModel: MenuModel? {
+    private var item: MenuModel? {
         didSet {
-            guard let cellModel = cellModel else { return }
+            guard let item = item else { return }
             let theme: Theme = UserDefaults.standard.bool(forKey: isLightThemeKey) ? .light : .dark
-            iconImageView.image = UIImage(menuSection: cellModel.menuSection, theme: theme)
-            titleLabel.text = NSLocalizedString(cellModel.title, comment: "")
+            iconImageView.image = UIImage(menuSection: item.menuSection, theme: theme)
+            titleLabel.text = NSLocalizedString(item.title, comment: "")
         }
     }
     
-    let iconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    var titleLabel: UILabel = {
+    private var titleLabel: UILabel = {
         let label = UILabel()
         label.adjustsFontSizeToFitWidth = true
         label.font = UIFont.systemFont(ofSize: 14)
@@ -33,7 +32,7 @@ class MenuTableViewCell: UITableViewCell {
         return label
     }()
     
-    var isLightTheme: Bool? {
+    private var isLightTheme: Bool? {
         didSet {
             guard let isLightTheme = isLightTheme else { return }
             titleLabel.textColor = isLightTheme ? .black : .white
@@ -46,14 +45,26 @@ class MenuTableViewCell: UITableViewCell {
         addSubview(iconImageView)
         addSubview(titleLabel)
         
-        iconImageView.constraintTo(top: contentView.topAnchor, bottom: nil, left: contentView.leftAnchor, right: nil, topConstant: 8, bottomConstant: 0, leftConstant: 8, rightConstant: 0)
+        iconImageView.constraintTo(
+            top: contentView.topAnchor, bottom: nil,
+            left: contentView.leftAnchor, right: nil,
+            topConstant: 8, bottomConstant: 0, leftConstant: 8, rightConstant: 0
+        )
         iconImageView.widthAnchor.constraint(equalToConstant: frame.height / 2).isActive = true
         iconImageView.heightAnchor.constraint(equalTo: iconImageView.widthAnchor).isActive = true
         
-        titleLabel.constraintTo(top: iconImageView.topAnchor, bottom: iconImageView.bottomAnchor, left: iconImageView.rightAnchor, right: rightAnchor, topConstant: 0, bottomConstant: 0, leftConstant: 8, rightConstant: 0)
+        titleLabel.constraintTo(
+            top: iconImageView.topAnchor, bottom: iconImageView.bottomAnchor,
+            left: iconImageView.rightAnchor, right: rightAnchor,
+            topConstant: 0, bottomConstant: 0, leftConstant: 8, rightConstant: 0
+        )
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(with item: MenuModel) {
+        self.item = item
     }
 }

@@ -20,7 +20,6 @@ class MenuViewController: UIViewController {
     let cellId = "cellId"
     
     let menuModels = [
-        MenuModel(title: "Theme", menuSection: .theme),
         MenuModel(title: "Feedback", menuSection: .feedback),
         MenuModel(title: "Rate", menuSection: .rate),
         MenuModel(title: "Share", menuSection: .share)
@@ -82,8 +81,7 @@ extension MenuViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MenuTableViewCell
-        cell.cellModel = menuModels[indexPath.row]
-        cell.isLightTheme = isLightTheme
+        cell.configure(with: menuModels[indexPath.row])
         return cell
     }
 }
@@ -97,8 +95,6 @@ extension MenuViewController: UITableViewDelegate {
         self.dismiss(animated: true) {
             let menuSection = self.menuModels[indexPath.row].menuSection
             switch menuSection {
-            case .theme:
-                self.delegate?.changeTheme()
             case .feedback:
                 self.delegate?.presentMailComposeViewController()
             case .rate:

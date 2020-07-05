@@ -12,10 +12,7 @@ import MessageUI
 import GoogleMobileAds
 
 class MainViewController: UIViewController {
-
-    //@IBOutlet weak var tableView: UITableView!
-    
-    var tableView: UITableView = {
+    private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
@@ -25,37 +22,45 @@ class MainViewController: UIViewController {
         return tableView
     }()
     
-    let cellId = "cellId"
-    
-    var cellModels = [BaseModel(labelText: "TEXT", textFieldPlaceHolderText: "TEXT", textFieldText: "" , keyboardType: .asciiCapable, allowingCharacters: "", base: 0, tag: 0),
-                      BaseModel(labelText: "ASCII", textFieldPlaceHolderText: "ASCII CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789 ", base: 10, tag: 1),
-                      BaseModel(labelText: "BIN", textFieldPlaceHolderText: "BINARY CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01 ", base: 2, tag: 2),
-                      BaseModel(labelText: "OCT", textFieldPlaceHolderText: "OCTAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "01234567 ", base: 8, tag: 3),
-                      BaseModel(labelText: "HEX", textFieldPlaceHolderText: "HEXADECIMAL CODE", textFieldText: "", keyboardType: .asciiCapable, allowingCharacters: "0123456789aAbBcCdDeEfF ", base: 16, tag: 4)]
-    
-    let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]
-    
-    var isLightTheme: Bool = UserDefaults.standard.bool(forKey: isLightThemeKey)
+    private let cellId = "cellId"
         
-    let mainLabelColors: [UIColor] = [UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0), UIColor.orange]
+    private let keyboardAppearance = [UIKeyboardAppearance.light, UIKeyboardAppearance.dark]
     
-    var showUpgradeAlert: Bool = false
+    private var isLightTheme: Bool = UserDefaults.standard.bool(forKey: isLightThemeKey)
+        
+    private let mainLabelColors: [UIColor] = [UIColor(red:0.14, green:0.84, blue:0.11, alpha:1.0), UIColor.orange]
     
-    var bannerView: GADBannerView!
+    private var showUpgradeAlert: Bool = false
     
-    var interstitial: GADInterstitial?
+    private var bannerView: GADBannerView!
     
-    let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool ?? true
+    private var interstitial: GADInterstitial?
+    
+    private let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool ?? true
+    
+    private let viewModel: MainViewModelType
         
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return isLightTheme ? .default : .lightContent
     }
     
-    fileprivate func setupTableView() {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        viewModel = MainViewModel()
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         view.addSubview(tableView)
-        _ = tableView.constraintTo(top: view.topAnchor, bottom: view.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, topConstant: 0, bottomConstant: 0, leftConstant: 0, rightConstant: 0)
+        tableView.constraintTo(
+            top: view.topAnchor, bottom: view.bottomAnchor,
+            left: view.leftAnchor, right: view.rightAnchor
+        )
         tableView.register(MainTableViewCell.self, forCellReuseIdentifier: cellId)
     }
     
@@ -95,17 +100,12 @@ class MainViewController: UIViewController {
             presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     @objc func onRefreshAction() {
-        for i in 0..<cellModels.count {
-            cellModels[i].textFieldText = ""
-            (tableView.visibleCells[i] as? MainTableViewCell)?.cellModel = cellModels[i]
+        for i in 0..<viewModel.cellLayoutItems.count {
+            viewModel.cellLayoutItems[i].content = ""
         }
+        tableView.reloadData()
     }
     
     @objc func onHomeAction() {
@@ -128,10 +128,20 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = isLightTheme ? .white : .black
         navigationController?.navigationBar.tintColor = isLightTheme ? .greenCoral : .orange
         
-        view.backgroundColor = isLightTheme ? .white : .black
+        if #available(iOS 13, *) {
+            view.backgroundColor = .systemBackground
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.label]
+            navigationController?.navigationBar.barTintColor = .systemBackground
+            navigationController?.navigationBar.tintColor =
+                traitCollection.userInterfaceStyle.themeColor
+        } else {
+            view.backgroundColor = .white
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+            navigationController?.navigationBar.barTintColor = .white
+            navigationController?.navigationBar.tintColor = .greenCoral
+        }
         
         setNeedsStatusBarAppearanceUpdate()
-        
         tableView.reloadData()
     }
     
@@ -163,18 +173,22 @@ class MainViewController: UIViewController {
         }
         UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: completion)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        loadTheme()
+    }
 }
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellModels.count
+        return viewModel.cellLayoutItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! MainTableViewCell
-        cell.cellModel = cellModels[indexPath.row]
-        cell.isLightTheme = isLightTheme
-        cell.delegate = self     
+        cell.configure(with: viewModel.cellLayoutItems[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
@@ -189,40 +203,40 @@ extension MainViewController: MainTableViewCellDelegate {
     }
     
     func updateCellModel(tag: Int, textFieldText: String) {
-        cellModels[tag].textFieldText = textFieldText
+        viewModel.cellLayoutItems[tag].content = textFieldText
     }
     
-    func setAllTextField0(exceptedIndex: Int) {
-        for i in 0..<cellModels.count {
+    func setAllBaseToEmpty(exceptedIndex: Int) {
+        for i in 0..<viewModel.cellLayoutItems.count {
             if (i != exceptedIndex) {
-                cellModels[i].textFieldText = ""
-                (tableView.visibleCells[i] as? MainTableViewCell)?.cellModel = cellModels[i]
+                viewModel.cellLayoutItems[i].content = ""
             }
         }
+        tableView.reloadData()
     }
     
     func convertToAllBases(exceptedIndex: Int, numbers: [String]) {
-        setAllTextField0(exceptedIndex: exceptedIndex)
+        setAllBaseToEmpty(exceptedIndex: exceptedIndex)
         // Convert number array to all bases
         for num in numbers {
             if let num = Int(num) {
-                for i in 1..<cellModels.count {
+                for i in 1..<viewModel.cellLayoutItems.count {
                     if (i != exceptedIndex) {
-                        cellModels[i].textFieldText += String(num, radix: cellModels[i].base).uppercased() + " "
-                        (tableView.visibleCells[i] as? MainTableViewCell)?.cellModel = cellModels[i]
+                        viewModel.cellLayoutItems[i].content += String(num, radix: viewModel.cellLayoutItems[i].base).uppercased() + " "
                     }
                 }
             }
         }
+        tableView.reloadData()
     }
     
     func convertASCIICodeToText() {
-        let numbers: [String] = cellModels[1].textFieldText.components(separatedBy: " ")
+        let numbers: [String] = viewModel.cellLayoutItems[1].content.components(separatedBy: " ")
         
         for num in numbers {
             if let num = Int(num) {
                 if (num > 31 && num < 128) {
-                    cellModels[0].textFieldText += String(describing: num.char)
+                    viewModel.cellLayoutItems[0].content += String(describing: num.char)
                 } else {
                     if (num > 127 && !showUpgradeAlert) {
                         presentAlert(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("AttentionMessage", comment: ""), isUpgradeMessage: false)
@@ -232,24 +246,24 @@ extension MainViewController: MainTableViewCellDelegate {
                 }
             }
         }
-        (tableView.visibleCells[0] as? MainTableViewCell)?.cellModel = cellModels[0]
+        tableView.reloadData()
         showUpgradeAlert = false
     }
     
     func convertTextToASCIICode(from textField: UITextField) -> [String]? {
         var stringNumbers: [String] = []
-        cellModels[1].textFieldText = ""
+        viewModel.cellLayoutItems[1].content = ""
         for char in textField.text! {
             if let asciiValue = char.asciiValue {
                 let stringNumber = String(asciiValue)
                 stringNumbers.append(stringNumber)
-                cellModels[1].textFieldText += stringNumber + " "
+                viewModel.cellLayoutItems[1].content += stringNumber + " "
             } else {
-                setAllTextField0(exceptedIndex: textField.tag)
+                setAllBaseToEmpty(exceptedIndex: textField.tag)
                 return nil
             }
         }
-        (tableView.visibleCells[1] as? MainTableViewCell)?.cellModel = cellModels[1]
+        tableView.reloadData()
         return stringNumbers
     }
 }
@@ -340,23 +354,6 @@ extension MainViewController : GADInterstitialDelegate {
     
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         ad.present(fromRootViewController: self)
-    }
-}
-
-extension String {
-    var asciiArray: [UInt32] {
-        return unicodeScalars.filter{$0.isASCII}.map{$0.value}
-    }
-}
-extension Character {
-    var asciiValue: UInt32? {
-        return String(self).unicodeScalars.filter{$0.isASCII}.first?.value
-    }
-}
-
-extension Int {
-    var char : Character {
-        return Character(UnicodeScalar(self)!)
     }
 }
 

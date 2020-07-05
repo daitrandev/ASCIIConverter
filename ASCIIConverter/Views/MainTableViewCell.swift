@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MainTableViewCellDelegate: class {
-    func setAllTextField0(exceptedIndex: Int)
+    func setAllBaseToEmpty(exceptedIndex: Int)
     func convertToAllBases(exceptedIndex: Int, numbers: [String])
     func convertASCIICodeToText()
     func convertTextToASCIICode(from textField: UITextField) -> [String]?
@@ -18,8 +18,7 @@ protocol MainTableViewCellDelegate: class {
 }
 
 class MainTableViewCell: UITableViewCell {
-
-    var label: UILabel = {
+    private let label: UILabel = {
         let label = UILabel()
         label.text = "ASCII"
         label.adjustsFontSizeToFitWidth = true
@@ -32,7 +31,7 @@ class MainTableViewCell: UITableViewCell {
         return label
     }()
     
-    lazy var textField: UITextField = {
+    private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.layer.borderWidth = 2
         textField.layer.cornerRadius = 5
@@ -41,94 +40,122 @@ class MainTableViewCell: UITableViewCell {
         textField.backgroundColor = .white
         textField.delegate = self
         textField.returnKeyType = .done
-        textField.delegate = self
+        textField.keyboardType = .asciiCapable
         textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
-    lazy var copyButton: UIButton = {
+    private lazy var copyButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.custom)
         button.addTarget(self, action: #selector(onCopyAction), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    var cellModel: BaseModel? {
+    private var item: MainViewModel.CellLayoutItem? {
         didSet {
-            guard let cellModel = cellModel else { return }
-            label.text = cellModel.labelText
-            textField.placeholder = cellModel.textFieldPlaceHolderText
-            textField.text = cellModel.textFieldText
-            textField.keyboardType = cellModel.keyboardType
-            textField.tag = cellModel.tag
+            guard let item = item else { return }
+            label.text = item.baseName
+            textField.text = item.content
+            textField.tag = item.tag
+            textField.attributedPlaceholder = NSAttributedString(
+                string: item.placeHolder,
+                attributes: [.foregroundColor: UIColor.gray]
+            )
         }
     }
+    
+    weak var delegate: MainTableViewCellDelegate?
+    
+    private let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool
+    
+    private func setupLayout() {
+        backgroundColor = .clear
         
-    var isLightTheme: Bool? {
-        didSet {
-            guard let isLightTheme = isLightTheme else { return }
-            textField.layer.borderColor = isLightTheme ? UIColor.greenCoral.cgColor : UIColor.orange.cgColor
-            textField.keyboardAppearance = isLightTheme ? .default : .dark
-            label.backgroundColor = isLightTheme ? .greenCoral : .orange
-            let copyButtonImage = isLightTheme ? UIImage(named: "copy-green") : UIImage(named: "copy-orange")
-            copyButton.setImage(copyButtonImage, for: .normal)
-        }
-    }
-    
-    var delegate: MainTableViewCellDelegate?
-    
-    let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool
-    
-    fileprivate func setupLayout() {
         addSubview(label)
         addSubview(textField)
         
-        label.constraintTo(top: topAnchor, bottom: bottomAnchor, left: contentView.leftAnchor, right: nil, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
+        label.constraintTo(
+            top: topAnchor, bottom: bottomAnchor,
+            left: contentView.leftAnchor, right: nil,
+            topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8
+        )
         label.widthAnchor.constraint(equalToConstant: 80).isActive = true
         
         guard let isFreeVersion = isFreeVersion else { return }
         if isFreeVersion {
-            textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: contentView.rightAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
-        } else {
-            addSubview(copyButton)
-            textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: copyButton.leftAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
-
-            copyButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
-            copyButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
-            copyButton.widthAnchor.constraint(equalTo: copyButton.heightAnchor).isActive = true
-            copyButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+            textField.constraintTo(
+                top: topAnchor, bottom: bottomAnchor,
+                left: label.rightAnchor, right: contentView.rightAnchor,
+                topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8
+            )
+            return
         }
+        
+        addSubview(copyButton)
+        textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: copyButton.leftAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
+        
+        copyButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8).isActive = true
+        copyButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor).isActive = true
+        copyButton.widthAnchor.constraint(equalTo: copyButton.heightAnchor).isActive = true
+        copyButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+    }
+    
+    private func loadTheme() {
+        if #available(iOS 13, *) {
+            textField.layer.borderColor = traitCollection.userInterfaceStyle.themeColor.cgColor
+            textField.keyboardAppearance = traitCollection.userInterfaceStyle == .dark ? .dark: .default
+            label.backgroundColor = traitCollection.userInterfaceStyle.themeColor
+            
+            let copyButtonImage = traitCollection.userInterfaceStyle == .dark ?
+                UIImage(named: "copy-orange") : UIImage(named: "copy-green")
+            copyButton.setImage(copyButtonImage, for: .normal)
+            return
+        }
+        
+        textField.layer.borderColor = UIColor.greenCoral.cgColor
+        textField.keyboardAppearance = .default
+        label.backgroundColor = .white
+        
+        let copyButtonImage = UIImage(named: "copy-green")
+        copyButton.setImage(copyButtonImage, for: .normal)
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupLayout()
-        backgroundColor = .clear
+        loadTheme()
+    }
+    
+    func configure(with item: MainViewModel.CellLayoutItem) {
+        self.item = item
     }
     
     @objc func onCopyAction() {
         if textField.text != "" {
             UIPasteboard.general.string = textField.text!
             delegate?.presentCopiedAlert(message: NSLocalizedString("Copied", comment: ""))
-        } else {
-            delegate?.presentCopiedAlert(message: NSLocalizedString("Nothing to copy", comment: ""))
+            return
         }
-    }
-    
-    func loadTheme() {
         
+        delegate?.presentCopiedAlert(message: NSLocalizedString("Nothing to copy", comment: ""))
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        loadTheme()
+    }
 }
 
 extension MainTableViewCell: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let cellModel = cellModel else { return false }
-        if (string == "" || cellModel.tag == 0) {
+        guard let item = item else { return false }
+        if (string == "" || item.tag == 0) {
             return true
         }
         
@@ -137,7 +164,7 @@ extension MainTableViewCell: UITextFieldDelegate {
         }
         
         for char in string {
-            if (!cellModel.allowingCharacters.contains(char)) {
+            if (!item.allowingCharacters.contains(char)) {
                 return false
             }
         }
@@ -157,10 +184,10 @@ extension MainTableViewCell: UITextFieldDelegate {
 
         delegate?.updateCellModel(tag: textField.tag, textFieldText: textField.text!)
         
-        guard let cellModel = cellModel else { return }
+        guard let item = item else { return }
         var numbers:[String]?
         
-        delegate?.setAllTextField0(exceptedIndex: textField.tag)
+        delegate?.setAllBaseToEmpty(exceptedIndex: textField.tag)
         
         // Convert sender.text to number array
         if textField.tag == 0 {
@@ -171,10 +198,10 @@ extension MainTableViewCell: UITextFieldDelegate {
             if var base10Nums = numbers, textField.tag != 1 {
                 for i in 0..<base10Nums.count {
                     let num = base10Nums[i].uppercased()
-                    if let base10 = Int(num, radix: cellModel.base) {
+                    if let base10 = Int(num, radix: item.base) {
                         base10Nums[i] = String(base10)
                     } else if num != "" {
-                        delegate?.setAllTextField0(exceptedIndex: textField.tag)
+                        delegate?.setAllBaseToEmpty(exceptedIndex: textField.tag)
                         return
                     }
                 }

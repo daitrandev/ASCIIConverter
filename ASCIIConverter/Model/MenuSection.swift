@@ -7,7 +7,6 @@
 //
 
 enum MenuSection: String {
-    case theme = "theme"
     case feedback = "feedback"
     case rate = "rate"
     case share = "share"
