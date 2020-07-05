@@ -8,7 +8,6 @@
 
 import Foundation
 
-let isLightThemeKey: String = "isLightTheme"
 let isDebug = false
 
 let bannerAdsUnitIDTrial = "ca-app-pub-3940256099942544/2934735716"
