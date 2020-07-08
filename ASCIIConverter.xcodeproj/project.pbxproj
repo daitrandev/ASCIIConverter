@@ -16,6 +16,8 @@
 		F83C388B24B21A6C0019F6F3 /* PurchasingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83C388A24B21A6C0019F6F3 /* PurchasingPopupViewController.swift */; };
 		F83C388D24B21AA90019F6F3 /* PurchasingPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F83C388C24B21AA90019F6F3 /* PurchasingPopupViewController.xib */; };
 		F83E327924B041F2006142FE /* UITraitCollection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83E327824B041F2006142FE /* UITraitCollection+Ext.swift */; };
+		F83F60E724B61E2300618C7E /* MessageDialogPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F60E624B61E2300618C7E /* MessageDialogPresentable.swift */; };
+		F83F60E924B61F8E00618C7E /* PurchasingPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F60E824B61F8E00618C7E /* PurchasingPopupViewModel.swift */; };
 		F8406B5C24B1B79D001A5C03 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8406B5B24B1B79D001A5C03 /* UIView+Ext.swift */; };
 		F8406B5E24B1B7C4001A5C03 /* UINavigationController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8406B5D24B1B7C4001A5C03 /* UINavigationController+Ext.swift */; };
 		F8406B6024B1B7DF001A5C03 /* UITextField+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8406B5F24B1B7DF001A5C03 /* UITextField+Ext.swift */; };
@@ -70,6 +72,8 @@
 		F83C388A24B21A6C0019F6F3 /* PurchasingPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasingPopupViewController.swift; sourceTree = "<group>"; };
 		F83C388C24B21AA90019F6F3 /* PurchasingPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchasingPopupViewController.xib; sourceTree = "<group>"; };
 		F83E327824B041F2006142FE /* UITraitCollection+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Ext.swift"; sourceTree = "<group>"; };
+		F83F60E624B61E2300618C7E /* MessageDialogPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDialogPresentable.swift; sourceTree = "<group>"; };
+		F83F60E824B61F8E00618C7E /* PurchasingPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasingPopupViewModel.swift; sourceTree = "<group>"; };
 		F8406B5B24B1B79D001A5C03 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		F8406B5D24B1B7C4001A5C03 /* UINavigationController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Ext.swift"; sourceTree = "<group>"; };
 		F8406B5F24B1B7DF001A5C03 /* UITextField+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Ext.swift"; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 			children = (
 				F83C388A24B21A6C0019F6F3 /* PurchasingPopupViewController.swift */,
 				F83C388C24B21AA90019F6F3 /* PurchasingPopupViewController.xib */,
+				F83F60E824B61F8E00618C7E /* PurchasingPopupViewModel.swift */,
 			);
 			path = PurchasingPopupViewController;
 			sourceTree = "<group>";
@@ -178,10 +183,27 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		F8406B6D24B1BFFB001A5C03 /* Utils */ = {
+		F83F60E424B61DF800618C7E /* NonUI */ = {
 			isa = PBXGroup;
 			children = (
 				F8406B6E24B1C006001A5C03 /* URLHandler.swift */,
+			);
+			path = NonUI;
+			sourceTree = "<group>";
+		};
+		F83F60E524B61DFE00618C7E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F83F60E624B61E2300618C7E /* MessageDialogPresentable.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F8406B6D24B1BFFB001A5C03 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F83F60E524B61DFE00618C7E /* UI */,
+				F83F60E424B61DF800618C7E /* NonUI */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -311,6 +333,7 @@
 				F8406B6F24B1C006001A5C03 /* URLHandler.swift in Sources */,
 				F8406B6C24B1B85B001A5C03 /* Int+Ext.swift in Sources */,
 				F8406B5C24B1B79D001A5C03 /* UIView+Ext.swift in Sources */,
+				F83F60E924B61F8E00618C7E /* PurchasingPopupViewModel.swift in Sources */,
 				23F7CBB321AA2F9A001CC3C4 /* Constants.swift in Sources */,
 				FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */,
 				F8406B6A24B1B849001A5C03 /* Character+Ext.swift in Sources */,
@@ -318,6 +341,7 @@
 				F8406B5E24B1B7C4001A5C03 /* UINavigationController+Ext.swift in Sources */,
 				F8406B6224B1B7FD001A5C03 /* UILabel+Ext.swift in Sources */,
 				F8406B6424B1B814001A5C03 /* UIColor+Ext.swift in Sources */,
+				F83F60E724B61E2300618C7E /* MessageDialogPresentable.swift in Sources */,
 				F852BDF524ACE6DB00E12938 /* MainViewModel.swift in Sources */,
 				F83C388B24B21A6C0019F6F3 /* PurchasingPopupViewController.swift in Sources */,
 				F8406B6824B1B838001A5C03 /* String+Ext.swift in Sources */,

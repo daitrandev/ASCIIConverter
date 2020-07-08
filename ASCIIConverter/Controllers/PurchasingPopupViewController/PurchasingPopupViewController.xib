@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PurchasingPopupViewController" customModule="ASCIIConverter" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="CT7-NI-vUY" id="iKJ-nj-Kqe"/>
+                <outlet property="cancelContainerView" destination="IhU-J6-hN2" id="oz7-Om-Br6"/>
                 <outlet property="killAdsButton" destination="RMf-hp-Fsu" id="47d-uj-Zjb"/>
                 <outlet property="restoreKillingAdsButton" destination="dDh-pl-DfV" id="kR2-QW-OBA"/>
                 <outlet property="view" destination="iN0-l3-epB" id="HO0-6w-fE8"/>

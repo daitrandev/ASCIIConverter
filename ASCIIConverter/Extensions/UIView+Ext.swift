@@ -27,4 +27,14 @@ extension UIView {
             rightAnchor.constraint(equalTo: right, constant: rightConstant).isActive = true
         }
     }
+    
+    func roundedTopCorners() {
+        let maskPath1 = UIBezierPath(roundedRect: bounds,
+            byRoundingCorners: [.topLeft , .topRight],
+            cornerRadii: CGSize(width: 30, height: 30))
+        let maskLayer1 = CAShapeLayer()
+        maskLayer1.frame = bounds
+        maskLayer1.path = maskPath1.cgPath
+        layer.mask = maskLayer1
+    }
 }
