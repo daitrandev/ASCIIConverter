@@ -81,6 +81,13 @@ class MainViewController: UIViewController {
             target: self,
             action: #selector(onRefreshAction)
         )
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "unlock"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapUnlock)
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +121,11 @@ class MainViewController: UIViewController {
         
         setNeedsStatusBarAppearanceUpdate()
         tableView.reloadData()
+    }
+    
+    @objc private func didTapUnlock() {
+        let vc = PurchasingPopupViewController()
+        present(vc, animated: true)
     }
     
     func presentAlert(title: String,
