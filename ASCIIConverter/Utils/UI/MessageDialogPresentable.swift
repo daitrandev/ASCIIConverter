@@ -9,16 +9,25 @@
 import UIKit
 
 protocol MessageDialogPresentable {
-    func showMessage(
+    func showMessageDialog(
         title: String,
         message: String,
         actionName: String?,
         action: (() -> Void)?
     )
+    
+    func showMessageDialog(
+        title: String,
+        message: String,
+        positiveActionName: String,
+        positiveAction: (() -> Void)?,
+        negativeActionName: String,
+        negativeAction: (() -> Void)?
+    )
 }
 
 extension MessageDialogPresentable where Self: UIViewController {
-    func showMessage(
+    func showMessageDialog(
         title: String,
         message: String,
         actionName: String?,
@@ -38,6 +47,38 @@ extension MessageDialogPresentable where Self: UIViewController {
                 )
             )
         }
+        
+        present(alert, animated: true)
+    }
+    
+    func showMessageDialog(
+        title: String,
+        message: String,
+        positiveActionName: String,
+        positiveAction: (() -> Void)?,
+        negativeActionName: String,
+        negativeAction: (() -> Void)?) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: positiveActionName,
+                style: .default,
+                handler: { _ in positiveAction?() }
+            )
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: negativeActionName,
+                style: .cancel,
+                handler: { _ in negativeAction?() }
+            )
+        )
         
         present(alert, animated: true)
     }

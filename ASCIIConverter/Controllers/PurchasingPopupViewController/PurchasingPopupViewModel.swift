@@ -48,10 +48,17 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
     func restorePurchasing() {
         SwiftyStoreKit.restorePurchases(atomically: true) { [weak self] results in
             if results.restoreFailedPurchases.count > 0 {
-                print("Restore Failed: \(results.restoreFailedPurchases)")
+                self?.delegate?.showMessageDialog(
+                    title: "Failed",
+                    message: "Restore Failed",
+                    actionName: "Cancel",
+                    action: {
+                        self?.delegate?.dismiss(isPurchased: false)
+                    }
+                )
             }
             else if results.restoredPurchases.count > 0 {
-                self?.delegate?.showMessage(
+                self?.delegate?.showMessageDialog(
                     title: "Success",
                     message: "Restore Successfully",
                     actionName: "Cancel",
@@ -61,7 +68,14 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
                 )
             }
             else {
-                print("Nothing to Restore")
+                self?.delegate?.showMessageDialog(
+                    title: "Failed",
+                    message: "Nothing to Restore",
+                    actionName: "Cancel",
+                    action: {
+                        self?.delegate?.dismiss(isPurchased: false)
+                    }
+                )
             }
         }
     }

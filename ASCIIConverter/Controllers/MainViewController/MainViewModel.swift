@@ -8,7 +8,7 @@
 
 import SwiftyStoreKit
 
-protocol MainViewModelDelegate: class {
+protocol MainViewModelDelegate: class, MessageDialogPresentable {
     func reloadTableView()
 }
 

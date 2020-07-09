@@ -28,10 +28,11 @@ extension UIView {
         }
     }
     
-    func roundedTopCorners() {
+    func roundedTopCorners(radius: CGFloat) {
         let maskPath1 = UIBezierPath(roundedRect: bounds,
             byRoundingCorners: [.topLeft , .topRight],
-            cornerRadii: CGSize(width: 30, height: 30))
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
         let maskLayer1 = CAShapeLayer()
         maskLayer1.frame = bounds
         maskLayer1.path = maskPath1.cgPath

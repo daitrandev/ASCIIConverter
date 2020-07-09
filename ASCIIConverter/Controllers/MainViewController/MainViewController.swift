@@ -25,7 +25,7 @@ class MainViewController: UIViewController {
                 
     private var showUpgradeAlert: Bool = false
     
-    private var bannerView: GADBannerView!
+    private var bannerView: GADBannerView?
     
     private var interstitial: GADInterstitial?
     
@@ -45,7 +45,9 @@ class MainViewController: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
+        
         view.addSubview(tableView)
+        
         tableView.constraintTo(
             top: view.topAnchor, bottom: view.bottomAnchor,
             left: view.leftAnchor, right: view.rightAnchor
@@ -57,10 +59,10 @@ class MainViewController: UIViewController {
         if isFreeVersion {
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
             let adUnitId = isDebug ? bannerAdsUnitIDTrial : bannerAdsUnitID
-            bannerView.adUnitID = adUnitId
-            bannerView.rootViewController = self
-            bannerView.load(GADRequest())
-            bannerView.delegate = self
+            bannerView?.adUnitID = adUnitId
+            bannerView?.rootViewController = self
+            bannerView?.load(GADRequest())
+            bannerView?.delegate = self
             
             interstitial = createAndLoadInterstitial()
         }
@@ -94,7 +96,14 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if isFreeVersion {
-            presentAlert(title: NSLocalizedString("Appname", comment: ""), message: NSLocalizedString("UpgradeMessage", comment: ""), isUpgradeMessage: true)
+            showMessageDialog(
+                title: "Appname".localized,
+                message: "UpgradeMessage".localized,
+                positiveActionName: "Upgrade",
+                positiveAction: nil,
+                negativeActionName: "Cancel",
+                negativeAction: nil
+            )
         }
     }
     
@@ -126,48 +135,6 @@ class MainViewController: UIViewController {
     @objc private func didTapUnlock() {
         let vc = PurchasingPopupViewController()
         present(vc, animated: true)
-    }
-    
-    func presentAlert(title: String,
-                      message: String,
-                      isUpgradeMessage: Bool) {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: .alert
-        )
-        alert.addAction(
-            UIAlertAction(
-                title: NSLocalizedString("Done", comment: ""),
-                style: .cancel,
-                handler: { _ in self.setNeedsStatusBarAppearanceUpdate() }
-            )
-        )
-        if isUpgradeMessage {
-            alert.addAction(
-                UIAlertAction(
-                    title: NSLocalizedString("Upgrade", comment: ""),
-                    style: .default,
-                    handler: { _ in
-                        self.setNeedsStatusBarAppearanceUpdate()
-                        self.rateApp(appId: "id1308862883") { success in
-                            print("RateApp \(success)")
-                        }
-                    }
-                )
-            )
-        }
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func rateApp(appId: String, completion: @escaping ((_ success: Bool)->())) {
-        guard let url = URL(string : "itms-apps://itunes.apple.com/app/" + appId) else {
-            completion(false)
-            return
-        }
-        
-        URLHandler.open(url: url)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -209,7 +176,7 @@ extension MainViewController: MainViewModelDelegate {
 
 extension MainViewController: MainTableViewCellDelegate {
     func presentCopiedAlert(message: String) {
-        self.presentAlert(title: message, message: "", isUpgradeMessage: false)
+        showMessageDialog(title: "Success", message: message, actionName: "Done", action: nil)
     }
     
     func updateCellModel(tag: Int, textFieldText: String) {
@@ -249,7 +216,12 @@ extension MainViewController: MainTableViewCellDelegate {
                     viewModel.cellLayoutItems[0].content += String(describing: num.char)
                 } else {
                     if (num > 127 && !showUpgradeAlert) {
-                        presentAlert(title: NSLocalizedString("Attention", comment: ""), message: NSLocalizedString("AttentionMessage", comment: ""), isUpgradeMessage: false)
+                        showMessageDialog(
+                            title: "Attention".localized,
+                            message: "AttentionMessage".localized,
+                            actionName: "Cancel",
+                            action: nil
+                        )
                         showUpgradeAlert = true
                     }
                     return

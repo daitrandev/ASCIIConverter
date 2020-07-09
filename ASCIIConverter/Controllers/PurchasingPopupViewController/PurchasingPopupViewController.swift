@@ -45,7 +45,7 @@ class PurchasingPopupViewController: UIViewController {
             )
         )
         
-        cancelContainerView.roundedTopCorners()
+        cancelContainerView.roundedTopCorners(radius: 30)
     }
     
     @objc private func didTapCancel() {
