@@ -57,11 +57,11 @@ class MainTableViewCell: UITableViewCell {
     private var item: MainViewModel.CellLayoutItem? {
         didSet {
             guard let item = item else { return }
-            label.text = item.baseName
+            label.text = item.base.name
             textField.text = item.content
             textField.tag = item.tag
             textField.attributedPlaceholder = NSAttributedString(
-                string: item.placeHolder,
+                string: item.base.fullName,
                 attributes: [.foregroundColor: UIColor.gray]
             )
         }
@@ -155,8 +155,7 @@ class MainTableViewCell: UITableViewCell {
 
 extension MainTableViewCell: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let item = item else { return false }
-        if (string == "" || item.tag == 0) {
+        if (string == "" || item?.tag == 0) {
             return true
         }
         
@@ -164,8 +163,12 @@ extension MainTableViewCell: UITextFieldDelegate {
             return false
         }
         
+        guard let allowingCharacters = item?.base.allowingCharacters else {
+            return true
+        }
+        
         for char in string {
-            if (!item.allowingCharacters.contains(char)) {
+            if (!allowingCharacters.contains(char)) {
                 return false
             }
         }
@@ -199,7 +202,7 @@ extension MainTableViewCell: UITextFieldDelegate {
             if var base10Nums = numbers, textField.tag != 1 {
                 for i in 0..<base10Nums.count {
                     let num = base10Nums[i].uppercased()
-                    if let base10 = Int(num, radix: item.base) {
+                    if let base10 = Int(num, radix: item.base.rawValue) {
                         base10Nums[i] = String(base10)
                     } else if num != "" {
                         delegate?.setAllBaseToEmpty(exceptedIndex: textField.tag)

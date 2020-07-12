@@ -30,6 +30,7 @@
 		F8406B7224B1CDBB001A5C03 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F8406B7124B1CDBB001A5C03 /* SwiftPackageProductDependency */; };
 		F8406B7524B1DD09001A5C03 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8406B7424B1DD09001A5C03 /* StoreKit.framework */; };
 		F852BDF524ACE6DB00E12938 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F852BDF424ACE6DB00E12938 /* MainViewModel.swift */; };
+		F8AD3DA024B77443009F1D95 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AD3D9F24B77443009F1D95 /* Base.swift */; };
 		FA0CF3C121FD747500A42D2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1350F1FA865A500659196 /* AppDelegate.swift */; };
 		FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239C9E6F1FAF5367000EF3E7 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		F8406B6E24B1C006001A5C03 /* URLHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLHandler.swift; sourceTree = "<group>"; };
 		F8406B7424B1DD09001A5C03 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		F852BDF424ACE6DB00E12938 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		F8AD3D9F24B77443009F1D95 /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				23F7CBC621AA3029001CC3C4 /* LaunchScreen.storyboard */,
 				23C1350F1FA865A500659196 /* AppDelegate.swift */,
 				2330D82D2184A66800677B36 /* Constants.swift */,
+				F8AD3D9E24B7741D009F1D95 /* Models */,
 				FA0CF3C921FD770500A42D2E /* Controllers */,
 				F83E327724B041DA006142FE /* Extensions */,
 				F8406B7324B1D099001A5C03 /* Resources */,
@@ -216,6 +219,14 @@
 				23F17A711FB071450088E951 /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F8AD3D9E24B7741D009F1D95 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F8AD3D9F24B77443009F1D95 /* Base.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		FA0CF3C921FD770500A42D2E /* Controllers */ = {
@@ -336,6 +347,7 @@
 				F83F60E924B61F8E00618C7E /* PurchasingPopupViewModel.swift in Sources */,
 				23F7CBB321AA2F9A001CC3C4 /* Constants.swift in Sources */,
 				FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */,
+				F8AD3DA024B77443009F1D95 /* Base.swift in Sources */,
 				F8406B6A24B1B849001A5C03 /* Character+Ext.swift in Sources */,
 				FA0CF3C121FD747500A42D2E /* AppDelegate.swift in Sources */,
 				F8406B5E24B1B7C4001A5C03 /* UINavigationController+Ext.swift in Sources */,

@@ -76,7 +76,9 @@ class MainViewController: UIViewController {
         
         loadTheme()
         
-        navigationController?.navigationBar.topItem?.title = NSLocalizedString("MainTitle", comment: "")
+        navigationController?.navigationBar.topItem?.title =
+            "MainTitle".localized
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "refresh"),
             style: .plain,
@@ -189,7 +191,6 @@ extension MainViewController: MainTableViewCellDelegate {
                 viewModel.cellLayoutItems[index].content = ""
             }
         }
-        reloadTableView()
     }
     
     func convertToAllBases(exceptedIndex: Int, numbers: [String]) {
@@ -199,7 +200,8 @@ extension MainViewController: MainTableViewCellDelegate {
             if let num = Int(num) {
                 for i in 1..<viewModel.cellLayoutItems.count {
                     if (i != exceptedIndex) {
-                        viewModel.cellLayoutItems[i].content += String(num, radix: viewModel.cellLayoutItems[i].base).uppercased() + " "
+                        let convertedNumberStr = String(num, radix: viewModel.cellLayoutItems[i].base.rawValue)
+                        viewModel.cellLayoutItems[i].content += convertedNumberStr.uppercased() + " "
                     }
                 }
             }
@@ -247,22 +249,6 @@ extension MainViewController: MainTableViewCellDelegate {
         }
         reloadTableView()
         return stringNumbers
-    }
-}
-
-extension MainViewController:  MFMailComposeViewControllerDelegate {
-    func configuredMailComposeViewController() -> MFMailComposeViewController {
-        let mailComposerVC = MFMailComposeViewController()
-        mailComposerVC.mailComposeDelegate = self
-        
-        mailComposerVC.setToRecipients(["universappteam@gmail.com"])
-        mailComposerVC.setSubject("[ASCII-Converter++ Feedback]")
-        
-        return mailComposerVC
-    }
-    
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
     }
 }
 
