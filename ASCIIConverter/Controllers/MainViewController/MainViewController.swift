@@ -43,6 +43,8 @@ class MainViewController: UIViewController {
     }
     
     private func setupTableView() {
+        viewModel.delegate = self
+        
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -181,74 +183,8 @@ extension MainViewController: MainTableViewCellDelegate {
         showMessageDialog(title: "Success", message: message, actionName: "Done", action: nil)
     }
     
-    func updateCellModel(tag: Int, textFieldText: String) {
-        viewModel.cellLayoutItems[tag].content = textFieldText
-    }
-    
-    func setAllBaseToEmpty(exceptedIndex: Int) {
-        for index in 0..<viewModel.cellLayoutItems.count {
-            if (index != exceptedIndex) {
-                viewModel.cellLayoutItems[index].content = ""
-            }
-        }
-    }
-    
-    func convertToAllBases(exceptedIndex: Int, numbers: [String]) {
-        setAllBaseToEmpty(exceptedIndex: exceptedIndex)
-        // Convert number array to all bases
-        for num in numbers {
-            if let num = Int(num) {
-                for i in 1..<viewModel.cellLayoutItems.count {
-                    if (i != exceptedIndex) {
-                        let convertedNumberStr = String(num, radix: viewModel.cellLayoutItems[i].base.rawValue)
-                        viewModel.cellLayoutItems[i].content += convertedNumberStr.uppercased() + " "
-                    }
-                }
-            }
-        }
-        reloadTableView()
-    }
-    
-    func convertASCIICodeToText() {
-        let numbers: [String] = viewModel.cellLayoutItems[1].content.components(separatedBy: " ")
-        
-        for num in numbers {
-            if let num = Int(num) {
-                if (num > 31 && num < 128) {
-                    viewModel.cellLayoutItems[0].content += String(describing: num.char)
-                } else {
-                    if (num > 127 && !showUpgradeAlert) {
-                        showMessageDialog(
-                            title: "Attention".localized,
-                            message: "AttentionMessage".localized,
-                            actionName: "Cancel",
-                            action: nil
-                        )
-                        showUpgradeAlert = true
-                    }
-                    return
-                }
-            }
-        }
-        reloadTableView()
-        showUpgradeAlert = false
-    }
-    
-    func convertTextToASCIICode(from textField: UITextField) -> [String]? {
-        var stringNumbers: [String] = []
-        viewModel.cellLayoutItems[1].content = ""
-        for char in textField.text! {
-            if let asciiValue = char.asciiValue {
-                let stringNumber = String(asciiValue)
-                stringNumbers.append(stringNumber)
-                viewModel.cellLayoutItems[1].content += stringNumber + " "
-            } else {
-                setAllBaseToEmpty(exceptedIndex: textField.tag)
-                return nil
-            }
-        }
-        reloadTableView()
-        return stringNumbers
+    func update(layoutItem: MainViewModel.CellLayoutItem) {
+        viewModel.update(layoutItem: layoutItem)
     }
 }
 

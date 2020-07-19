@@ -8,9 +8,9 @@
 
 enum Base: Int {
     case normalText = 0
-    case asciiCode = 10
     case binaryCode = 2
     case octalCode = 8
+    case asciiCode = 10
     case hexaCode = 16
     
     var name: String {

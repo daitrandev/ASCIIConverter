@@ -132,17 +132,8 @@
 				F83E327724B041DA006142FE /* Extensions */,
 				F8406B7324B1D099001A5C03 /* Resources */,
 				F8406B6D24B1BFFB001A5C03 /* Utils */,
-				23E11820218418CC00C1CAD0 /* Views */,
 			);
 			path = ASCIIConverter;
-			sourceTree = "<group>";
-		};
-		23E11820218418CC00C1CAD0 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				239C9E711FAF548D000EF3E7 /* MainTableViewCell.swift */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		9871A47592F8749DB4F625EF /* Pods */ = {
@@ -243,6 +234,7 @@
 			children = (
 				239C9E6F1FAF5367000EF3E7 /* MainViewController.swift */,
 				F852BDF424ACE6DB00E12938 /* MainViewModel.swift */,
+				239C9E711FAF548D000EF3E7 /* MainTableViewCell.swift */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";

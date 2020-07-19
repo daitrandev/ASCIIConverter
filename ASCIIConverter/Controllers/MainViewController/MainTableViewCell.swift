@@ -9,11 +9,7 @@
 import UIKit
 
 protocol MainTableViewCellDelegate: class {
-    func setAllBaseToEmpty(exceptedIndex: Int)
-    func convertToAllBases(exceptedIndex: Int, numbers: [String])
-    func convertASCIICodeToText()
-    func convertTextToASCIICode(from textField: UITextField) -> [String]?
-    func updateCellModel(tag: Int, textFieldText: String)
+    func update(layoutItem: MainViewModel.CellLayoutItem)
     func presentCopiedAlert(message: String)
 }
 
@@ -49,7 +45,7 @@ class MainTableViewCell: UITableViewCell {
     
     private lazy var copyButton: UIButton = {
         let button = UIButton(type: UIButton.ButtonType.custom)
-        button.addTarget(self, action: #selector(onCopyAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapCopy), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -59,7 +55,6 @@ class MainTableViewCell: UITableViewCell {
             guard let item = item else { return }
             label.text = item.base.name
             textField.text = item.content
-            textField.tag = item.tag
             textField.attributedPlaceholder = NSAttributedString(
                 string: item.base.fullName,
                 attributes: [.foregroundColor: UIColor.gray]
@@ -133,14 +128,14 @@ class MainTableViewCell: UITableViewCell {
         self.item = item
     }
     
-    @objc func onCopyAction() {
+    @objc private func didTapCopy() {
         if textField.text != "" {
             UIPasteboard.general.string = textField.text!
-            delegate?.presentCopiedAlert(message: NSLocalizedString("Copied", comment: ""))
+            delegate?.presentCopiedAlert(message: "Copied".localized)
             return
         }
         
-        delegate?.presentCopiedAlert(message: NSLocalizedString("Nothing to copy", comment: ""))
+        delegate?.presentCopiedAlert(message: "Nothing to copy".localized)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -155,7 +150,7 @@ class MainTableViewCell: UITableViewCell {
 
 extension MainTableViewCell: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if (string == "" || item?.tag == 0) {
+        if (string == "" || item?.base == .normalText) {
             return true
         }
         
@@ -182,47 +177,10 @@ extension MainTableViewCell: UITextFieldDelegate {
     }
     
     @objc func textFieldEditingChanged() {
-        if textField.tag == 4 {
-            textField.text = textField.text?.uppercased()
-        }
-
-        delegate?.updateCellModel(tag: textField.tag, textFieldText: textField.text!)
+        item?.content = textField.text!
         
-        guard let item = item else { return }
-        var numbers:[String]?
-        
-        delegate?.setAllBaseToEmpty(exceptedIndex: textField.tag)
-        
-        // Convert sender.text to number array
-        if textField.tag == 0 {
-            numbers = delegate?.convertTextToASCIICode(from: textField)
-        } else {
-            // Convert to base 10
-            numbers = textField.text?.components(separatedBy: " ")
-            if var base10Nums = numbers, textField.tag != 1 {
-                for i in 0..<base10Nums.count {
-                    let num = base10Nums[i].uppercased()
-                    if let base10 = Int(num, radix: item.base.rawValue) {
-                        base10Nums[i] = String(base10)
-                    } else if num != "" {
-                        delegate?.setAllBaseToEmpty(exceptedIndex: textField.tag)
-                        return
-                    }
-                }
-                numbers = base10Nums
-            }
-        }
-        
-        if numbers == nil {
-            return
-        }
-        
-        // Convert number array to all bases
-        delegate?.convertToAllBases(exceptedIndex: textField.tag, numbers: numbers!)
-
-        // Convert base10 to TEXT
-        if textField.tag != 0 {
-            delegate?.convertASCIICodeToText()
+        if let item = item {
+            delegate?.update(layoutItem: item)
         }
     }
 }
