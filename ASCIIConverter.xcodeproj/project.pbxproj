@@ -34,6 +34,10 @@
 		F840CED724C3F82D00B7A431 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F840CECE24C3F82D00B7A431 /* Roboto-Regular.ttf */; };
 		F840CEDA24C3F82D00B7A431 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F840CED124C3F82D00B7A431 /* Roboto-Light.ttf */; };
 		F840CEDC24C3FC7B00B7A431 /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEDB24C3FC7B00B7A431 /* UIFont+Utils.swift */; };
+		F840CEDF24C407B000B7A431 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = F840CEDE24C407B000B7A431 /* SwiftPackageProductDependency */; };
+		F840CEE124C421FC00B7A431 /* KeychainKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEE024C421FC00B7A431 /* KeychainKey.swift */; };
+		F840CEE324C428A400B7A431 /* GlobalKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEE224C428A400B7A431 /* GlobalKeychain.swift */; };
+		F840CEE524C42D1800B7A431 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEE424C42D1800B7A431 /* LoadingButton.swift */; };
 		F852BDF524ACE6DB00E12938 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F852BDF424ACE6DB00E12938 /* MainViewModel.swift */; };
 		F8AD3DA024B77443009F1D95 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AD3D9F24B77443009F1D95 /* Base.swift */; };
 		FA0CF3C121FD747500A42D2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1350F1FA865A500659196 /* AppDelegate.swift */; };
@@ -95,6 +99,9 @@
 		F840CECE24C3F82D00B7A431 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		F840CED124C3F82D00B7A431 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		F840CEDB24C3FC7B00B7A431 /* UIFont+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
+		F840CEE024C421FC00B7A431 /* KeychainKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainKey.swift; sourceTree = "<group>"; };
+		F840CEE224C428A400B7A431 /* GlobalKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeychain.swift; sourceTree = "<group>"; };
+		F840CEE424C42D1800B7A431 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		F852BDF424ACE6DB00E12938 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		F8AD3D9F24B77443009F1D95 /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -106,6 +113,7 @@
 			files = (
 				F8406B7524B1DD09001A5C03 /* StoreKit.framework in Frameworks */,
 				F8406B7224B1CDBB001A5C03 /* BuildFile in Frameworks */,
+				F840CEDF24C407B000B7A431 /* BuildFile in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				F8406B6E24B1C006001A5C03 /* URLHandler.swift */,
+				F840CEE224C428A400B7A431 /* GlobalKeychain.swift */,
 			);
 			path = NonUI;
 			sourceTree = "<group>";
@@ -200,6 +209,7 @@
 			children = (
 				F83F60E624B61E2300618C7E /* MessageDialogPresentable.swift */,
 				F840CEDB24C3FC7B00B7A431 /* UIFont+Utils.swift */,
+				F840CEE424C42D1800B7A431 /* LoadingButton.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -239,6 +249,7 @@
 			isa = PBXGroup;
 			children = (
 				F8AD3D9F24B77443009F1D95 /* Base.swift */,
+				F840CEE024C421FC00B7A431 /* KeychainKey.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -280,6 +291,7 @@
 			name = ASCIIConverter;
 			packageProductDependencies = (
 				F8406B7124B1CDBB001A5C03 /* SwiftPackageProductDependency */,
+				F840CEDE24C407B000B7A431 /* SwiftPackageProductDependency */,
 			);
 			productName = ASCIIConverter;
 			productReference = 23F7CBC421AA2F9A001CC3C4 /* ASCIIConverter.app */;
@@ -324,6 +336,7 @@
 			mainGroup = 23C135031FA865A500659196;
 			packageReferences = (
 				F8406B7024B1CDBB001A5C03 /* RemoteSwiftPackageReference */,
+				F840CEDD24C407B000B7A431 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 23C1350D1FA865A500659196 /* Products */;
 			projectDirPath = "";
@@ -360,6 +373,7 @@
 			files = (
 				23F7CBB221AA2F9A001CC3C4 /* MainTableViewCell.swift in Sources */,
 				F8406B6024B1B7DF001A5C03 /* UITextField+Ext.swift in Sources */,
+				F840CEE124C421FC00B7A431 /* KeychainKey.swift in Sources */,
 				F8406B6F24B1C006001A5C03 /* URLHandler.swift in Sources */,
 				F8406B6C24B1B85B001A5C03 /* Int+Ext.swift in Sources */,
 				F8406B5C24B1B79D001A5C03 /* UIView+Ext.swift in Sources */,
@@ -367,7 +381,9 @@
 				F840CEDC24C3FC7B00B7A431 /* UIFont+Utils.swift in Sources */,
 				23F7CBB321AA2F9A001CC3C4 /* Constants.swift in Sources */,
 				FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */,
+				F840CEE324C428A400B7A431 /* GlobalKeychain.swift in Sources */,
 				F8AD3DA024B77443009F1D95 /* Base.swift in Sources */,
+				F840CEE524C42D1800B7A431 /* LoadingButton.swift in Sources */,
 				F8406B6A24B1B849001A5C03 /* Character+Ext.swift in Sources */,
 				FA0CF3C121FD747500A42D2E /* AppDelegate.swift in Sources */,
 				F8406B5E24B1B7C4001A5C03 /* UINavigationController+Ext.swift in Sources */,
@@ -629,6 +645,14 @@
 				minimumVersion = 0.16.0;
 			};
 		};
+		F840CEDD24C407B000B7A431 /* RemoteSwiftPackageReference */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 19.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -636,6 +660,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F8406B7024B1CDBB001A5C03 /* RemoteSwiftPackageReference */;
 			productName = SwiftyStoreKit;
+		};
+		F840CEDE24C407B000B7A431 /* SwiftPackageProductDependency */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F840CEDD24C407B000B7A431 /* RemoteSwiftPackageReference */;
+			productName = KeychainSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

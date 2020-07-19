@@ -59,15 +59,13 @@ class MainTableViewCell: UITableViewCell {
                 string: item.base.fullName,
                 attributes: [
                     .foregroundColor: UIColor.gray,
-                    .font: UIFont(name: "Roboto-Bold", size: 18) as Any
+                    .font: UIFont(name: "Roboto-Regular", size: 18) as Any
                 ]
             )
         }
     }
     
     weak var delegate: MainTableViewCellDelegate?
-    
-    private let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool
     
     private func setupLayout() {
         backgroundColor = .clear
@@ -81,16 +79,6 @@ class MainTableViewCell: UITableViewCell {
             topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8
         )
         label.widthAnchor.constraint(equalToConstant: 80).isActive = true
-        
-        guard let isFreeVersion = isFreeVersion else { return }
-        if isFreeVersion {
-            textField.constraintTo(
-                top: topAnchor, bottom: bottomAnchor,
-                left: label.rightAnchor, right: contentView.rightAnchor,
-                topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8
-            )
-            return
-        }
         
         addSubview(copyButton)
         textField.constraintTo(top: topAnchor, bottom: bottomAnchor, left: label.rightAnchor, right: copyButton.leftAnchor, topConstant: 8, bottomConstant: -8, leftConstant: 8, rightConstant: -8)
@@ -181,6 +169,9 @@ extension MainTableViewCell: UITextFieldDelegate {
     
     @objc func textFieldEditingChanged() {
         item?.content = textField.text!
+        if item?.base == .hexaCode {
+            item?.content = textField.text!.uppercased()
+        }
         
         if let item = item {
             delegate?.update(layoutItem: item)

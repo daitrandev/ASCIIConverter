@@ -29,8 +29,6 @@ class MainViewController: UIViewController {
     
     private var interstitial: GADInterstitial?
     
-    private let isFreeVersion = Bundle.main.infoDictionary?["isFreeVersion"] as? Bool ?? true
-    
     private let viewModel: MainViewModelType
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -58,7 +56,7 @@ class MainViewController: UIViewController {
     }
     
     private func setupAdsViews() {
-        if isFreeVersion {
+        if !viewModel.isPurchased {
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
             let adUnitId = isDebug ? bannerAdsUnitIDTrial : bannerAdsUnitID
             bannerView?.adUnitID = adUnitId
@@ -75,13 +73,10 @@ class MainViewController: UIViewController {
         
         setupTableView()
         setupAdsViews()
+        setupViews()
         
         loadTheme()
         
-        navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.black,
-            .font: UIFont(name: "Roboto-Bold", size: 18)!
-        ]
         title = "ASCII Converter"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -90,26 +85,15 @@ class MainViewController: UIViewController {
             target: self,
             action: #selector(onRefreshAction)
         )
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(named: "unlock"),
-            style: .plain,
-            target: self,
-            action: #selector(didTapUnlock)
-        )
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if isFreeVersion {
-            showMessageDialog(
-                title: "Appname".localized,
-                message: "UpgradeMessage".localized,
-                positiveActionName: "Upgrade",
-                positiveAction: nil,
-                negativeActionName: "Cancel",
-                negativeAction: nil
+    private func setupViews() {
+        if !viewModel.isPurchased {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(
+                image: UIImage(named: "unlock"),
+                style: .plain,
+                target: self,
+                action: #selector(didTapUnlock)
             )
         }
     }
@@ -128,11 +112,19 @@ class MainViewController: UIViewController {
             navigationController?.navigationBar.barTintColor = .systemBackground
             navigationController?.navigationBar.tintColor =
                 traitCollection.userInterfaceStyle.themeColor
+            navigationController?.navigationBar.titleTextAttributes = [
+                .foregroundColor: UIColor.label,
+                .font: UIFont(name: "Roboto-Bold", size: 18)!
+            ]
         } else {
             view.backgroundColor = .white
             navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
             navigationController?.navigationBar.barTintColor = .white
             navigationController?.navigationBar.tintColor = .greenCoral
+            navigationController?.navigationBar.titleTextAttributes = [
+                .foregroundColor: UIColor.white,
+                .font: UIFont(name: "Roboto-Bold", size: 18)!
+            ]
         }
         
         setNeedsStatusBarAppearanceUpdate()
@@ -141,6 +133,7 @@ class MainViewController: UIViewController {
     
     @objc private func didTapUnlock() {
         let vc = PurchasingPopupViewController()
+        vc.delegate = self
         present(vc, animated: true)
     }
     
@@ -164,6 +157,14 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
+    }
+}
+
+extension MainViewController: PurchasingPopupViewControllerDelegate {
+    func removeAds() {
+        bannerView?.removeFromSuperview()
+        tableView.tableHeaderView = nil
+        navigationItem.leftBarButtonItem = nil
     }
 }
 

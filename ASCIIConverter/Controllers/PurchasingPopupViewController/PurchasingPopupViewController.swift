@@ -9,13 +9,19 @@
 import UIKit
 import SwiftyStoreKit
 
+protocol PurchasingPopupViewControllerDelegate: class {
+    func removeAds()
+}
+
 class PurchasingPopupViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var killAdsButton: UIButton!
-    @IBOutlet weak var restoreKillingAdsButton: UIButton!
+    @IBOutlet weak var donateLoadingButton: LoadingButton!
+    @IBOutlet weak var restoreDonateButton: LoadingButton!
     @IBOutlet weak var cancelContainerView: UIView!
     
     private let viewModel: PurchasingPopupViewModelType
+    
+    weak var delegate: PurchasingPopupViewControllerDelegate?
     
     init() {
         viewModel = PurchasingPopupViewModel()
@@ -32,6 +38,14 @@ class PurchasingPopupViewController: UIViewController {
         
         viewModel.delegate = self
         
+        setDonateButton(isEnabled: true)
+        setRestoreDonate(isEnabled: true)
+        
+        if #available(iOS 13, *) {
+            donateLoadingButton.set(buttonColor: traitCollection.userInterfaceStyle.themeColor)
+            restoreDonateButton.set(buttonColor: traitCollection.userInterfaceStyle.themeColor)
+        }
+                
         cancelButton.addTarget(
             self,
             action: #selector(didTapCancel),
@@ -52,17 +66,33 @@ class PurchasingPopupViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @IBAction func didTapKillAds() {
+    @IBAction func didTapDonate() {
+        setDonateButton(isEnabled: false)
+        
         viewModel.purchaseAds()
     }
     
-    @IBAction func didTapRestoreKillingAds() {
+    @IBAction func didTapRestoreDonateAds() {
+        setRestoreDonate(isEnabled: false)
+        
         viewModel.restorePurchasing()
     }
 }
 
 extension PurchasingPopupViewController: PurchasingPopupViewModelDelegate {
-    func dismiss(isPurchased: Bool) {
-        dismiss(animated: true)
+    func setDonateButton(isEnabled: Bool) {
+        donateLoadingButton.set(isEnabled: isEnabled)
+    }
+    
+    func setRestoreDonate(isEnabled: Bool) {
+        restoreDonateButton.set(isEnabled: isEnabled)
+    }
+    
+    func removeAds() {
+        delegate?.removeAds()
+    }
+    
+    func dismiss(completion: (() -> Void)?) {
+        dismiss(animated: true, completion: completion)
     }
 }

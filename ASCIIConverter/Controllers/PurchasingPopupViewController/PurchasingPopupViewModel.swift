@@ -7,9 +7,13 @@
 //
 
 import SwiftyStoreKit
+import KeychainSwift
 
 protocol PurchasingPopupViewModelDelegate: class, MessageDialogPresentable {
-    func dismiss(isPurchased: Bool)
+    func dismiss(completion: (() -> Void)?)
+    func setDonateButton(isEnabled: Bool)
+    func setRestoreDonate(isEnabled: Bool)
+    func removeAds()
 }
 
 protocol PurchasingPopupViewModelType: class {
@@ -19,7 +23,6 @@ protocol PurchasingPopupViewModelType: class {
 }
 
 class PurchasingPopupViewModel: PurchasingPopupViewModelType {
-    
     weak var delegate: PurchasingPopupViewModelDelegate?
     
     func purchaseAds() {
@@ -27,6 +30,13 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
             switch result {
             case .success(let purchase):
                 print("Purchase Success: \(purchase.productId)")
+                
+                GlobalKeychain.set(value: true, for: KeychainKey.isPurchased)
+                
+                self.delegate?.dismiss {
+                    self.delegate?.removeAds()
+                }
+                
             case .error(let error):
                 switch error.code {
                 case .unknown: print("Unknown error. Please contact support")
@@ -42,6 +52,8 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
                     print(error.localizedDescription)
                 }
             }
+            
+            self.delegate?.setDonateButton(isEnabled: true)
         }
     }
     
@@ -53,17 +65,20 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
                     message: "Restore Failed",
                     actionName: "Cancel",
                     action: {
-                        self?.delegate?.dismiss(isPurchased: false)
+                        self?.delegate?.setRestoreDonate(isEnabled: true)
                     }
                 )
             }
             else if results.restoredPurchases.count > 0 {
+                GlobalKeychain.set(value: true, for: KeychainKey.isPurchased)
                 self?.delegate?.showMessageDialog(
                     title: "Success",
                     message: "Restore Successfully",
                     actionName: "Cancel",
                     action: {
-                        self?.delegate?.dismiss(isPurchased: true)
+                        self?.delegate?.dismiss {
+                            self?.delegate?.removeAds()
+                        }
                     }
                 )
             }
@@ -73,7 +88,7 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
                     message: "Nothing to Restore",
                     actionName: "Cancel",
                     action: {
-                        self?.delegate?.dismiss(isPurchased: false)
+                        self?.delegate?.setRestoreDonate(isEnabled: true)
                     }
                 )
             }

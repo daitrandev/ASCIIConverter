@@ -7,6 +7,7 @@
 //
 
 import SwiftyStoreKit
+import KeychainSwift
 
 protocol MainViewModelDelegate: class, MessageDialogPresentable {
     func reloadTableView()
@@ -15,6 +16,7 @@ protocol MainViewModelDelegate: class, MessageDialogPresentable {
 protocol MainViewModelType: class {
     var cellLayoutItems: [MainViewModel.CellLayoutItem] { get set }
     var delegate: MainViewModelDelegate? { get set }
+    var isPurchased: Bool { get }
     func update(layoutItem: MainViewModel.CellLayoutItem)
 }
 
@@ -28,6 +30,10 @@ class MainViewModel: MainViewModelType {
         didSet {
             delegate?.reloadTableView()
         }
+    }
+    
+    var isPurchased: Bool {
+        GlobalKeychain.getBool(for: KeychainKey.isPurchased) ?? true
     }
     
     weak var delegate: MainViewModelDelegate?

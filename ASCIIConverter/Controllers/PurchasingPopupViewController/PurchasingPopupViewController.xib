@@ -17,8 +17,8 @@
             <connections>
                 <outlet property="cancelButton" destination="CT7-NI-vUY" id="iKJ-nj-Kqe"/>
                 <outlet property="cancelContainerView" destination="IhU-J6-hN2" id="oz7-Om-Br6"/>
-                <outlet property="killAdsButton" destination="RMf-hp-Fsu" id="47d-uj-Zjb"/>
-                <outlet property="restoreKillingAdsButton" destination="dDh-pl-DfV" id="kR2-QW-OBA"/>
+                <outlet property="donateLoadingButton" destination="rhX-RB-0Ol" id="p35-47-ncW"/>
+                <outlet property="restoreDonateButton" destination="EYa-TI-bTB" id="Fa9-EW-ZXv"/>
                 <outlet property="view" destination="iN0-l3-epB" id="HO0-6w-fE8"/>
             </connections>
         </placeholder>
@@ -49,40 +49,108 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="UCY-zG-OzJ">
                             <rect key="frame" x="16" y="50" width="382" height="50"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMf-hp-Fsu">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rhX-RB-0Ol" customClass="LoadingButton" customModule="ASCIIConverter" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
-                                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                    <state key="normal" title="Donate">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="8"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMf-hp-Fsu">
+                                            <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
+                                            <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                            <state key="normal">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="didTapDonate" destination="-1" eventType="touchUpInside" id="uyR-FT-RtO"/>
+                                            </connections>
+                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5B5-WU-OqF">
+                                            <rect key="frame" x="49.5" y="15" width="84.5" height="20"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yJ-VP-Jht">
+                                                    <rect key="frame" x="0.0" y="0.0" width="54.5" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="cvB-yj-0xW">
+                                                    <rect key="frame" x="64.5" y="0.0" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="RMf-hp-Fsu" secondAttribute="trailing" id="8KF-eE-mdJ"/>
+                                        <constraint firstItem="5B5-WU-OqF" firstAttribute="centerY" secondItem="rhX-RB-0Ol" secondAttribute="centerY" id="IgH-Ua-Beb"/>
+                                        <constraint firstItem="RMf-hp-Fsu" firstAttribute="top" secondItem="rhX-RB-0Ol" secondAttribute="top" id="Mzq-Fp-gbg"/>
+                                        <constraint firstItem="5B5-WU-OqF" firstAttribute="centerX" secondItem="rhX-RB-0Ol" secondAttribute="centerX" id="SgY-c5-Z5I"/>
+                                        <constraint firstAttribute="bottom" secondItem="RMf-hp-Fsu" secondAttribute="bottom" id="WZn-uw-2Yq"/>
+                                        <constraint firstItem="RMf-hp-Fsu" firstAttribute="leading" secondItem="rhX-RB-0Ol" secondAttribute="leading" id="ZH0-wE-iHU"/>
+                                    </constraints>
                                     <connections>
-                                        <action selector="didTapKillAds" destination="-1" eventType="touchUpInside" id="1tj-FC-Rkl"/>
+                                        <outlet property="button" destination="RMf-hp-Fsu" id="4g6-Gr-fV6"/>
+                                        <outlet property="indicator" destination="cvB-yj-0xW" id="eMh-mA-SId"/>
+                                        <outlet property="label" destination="8yJ-VP-Jht" id="VW5-T9-4uT"/>
+                                        <outlet property="stackView" destination="5B5-WU-OqF" id="WZz-eQ-idz"/>
                                     </connections>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDh-pl-DfV">
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EYa-TI-bTB" customClass="LoadingButton" customModule="ASCIIConverter" customModuleProvider="target">
                                     <rect key="frame" x="199" y="0.0" width="183" height="50"/>
-                                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                    <state key="normal" title="Donated before?">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </state>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                            <integer key="value" value="8"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDh-pl-DfV">
+                                            <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
+                                            <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                            <state key="normal">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="didTapRestoreDonateAds" destination="-1" eventType="touchUpInside" id="qeQ-yL-diG"/>
+                                            </connections>
+                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JCy-a8-0Ug">
+                                            <rect key="frame" x="13.5" y="15" width="156" height="20"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donated Before?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHY-4D-4a2">
+                                                    <rect key="frame" x="0.0" y="0.0" width="126" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="66U-vM-FOY">
+                                                    <rect key="frame" x="136" y="0.0" width="20" height="20"/>
+                                                </activityIndicatorView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    <constraints>
+                                        <constraint firstItem="JCy-a8-0Ug" firstAttribute="centerY" secondItem="EYa-TI-bTB" secondAttribute="centerY" id="OzQ-Fi-bee"/>
+                                        <constraint firstAttribute="bottom" secondItem="dDh-pl-DfV" secondAttribute="bottom" id="Ys9-bU-61P"/>
+                                        <constraint firstItem="dDh-pl-DfV" firstAttribute="top" secondItem="EYa-TI-bTB" secondAttribute="top" id="jqJ-Gh-kSG"/>
+                                        <constraint firstAttribute="trailing" secondItem="dDh-pl-DfV" secondAttribute="trailing" id="nMb-gM-UwG"/>
+                                        <constraint firstItem="dDh-pl-DfV" firstAttribute="leading" secondItem="EYa-TI-bTB" secondAttribute="leading" id="wPT-ht-L4P"/>
+                                        <constraint firstItem="JCy-a8-0Ug" firstAttribute="centerX" secondItem="EYa-TI-bTB" secondAttribute="centerX" id="yXm-hT-Y5B"/>
+                                    </constraints>
                                     <connections>
-                                        <action selector="didTapRestoreKillingAds" destination="-1" eventType="touchUpInside" id="qeQ-yL-diG"/>
+                                        <outlet property="button" destination="dDh-pl-DfV" id="prA-Xn-Jl3"/>
+                                        <outlet property="indicator" destination="66U-vM-FOY" id="dlD-yr-UDr"/>
+                                        <outlet property="label" destination="FHY-4D-4a2" id="27W-6s-cHz"/>
+                                        <outlet property="stackView" destination="JCy-a8-0Ug" id="Gjg-cZ-sff"/>
                                     </connections>
-                                </button>
+                                </view>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="kIh-Ut-xa7"/>
