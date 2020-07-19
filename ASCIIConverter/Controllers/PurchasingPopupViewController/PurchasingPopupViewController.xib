@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -7,6 +7,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Regular.ttf">
+            <string>Roboto-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PurchasingPopupViewController" customModule="ASCIIConverter" customModuleProvider="target">
             <connections>
@@ -23,11 +28,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IhU-J6-hN2">
-                    <rect key="frame" x="0.0" y="742" width="414" height="38"/>
+                    <rect key="frame" x="0.0" y="706" width="414" height="40"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CT7-NI-vUY">
-                            <rect key="frame" x="348" y="8" width="50" height="30"/>
-                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                            <rect key="frame" x="346" y="8" width="52" height="32"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                             <state key="normal" title="Cancel"/>
                         </button>
                     </subviews>
@@ -39,14 +44,15 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7eC-jh-FRX">
-                    <rect key="frame" x="0.0" y="780" width="414" height="82"/>
+                    <rect key="frame" x="0.0" y="746" width="414" height="116"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="UCY-zG-OzJ">
-                            <rect key="frame" x="16" y="16" width="382" height="50"/>
+                            <rect key="frame" x="16" y="50" width="382" height="50"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RMf-hp-Fsu">
                                     <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
                                     <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                     <state key="normal" title="Donate">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
@@ -63,6 +69,7 @@
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dDh-pl-DfV">
                                     <rect key="frame" x="199" y="0.0" width="183" height="50"/>
                                     <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
                                     <state key="normal" title="Donated before?">
                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
@@ -81,12 +88,21 @@
                                 <constraint firstAttribute="height" constant="50" id="kIh-Ut-xa7"/>
                             </constraints>
                         </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You like this app?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxl-Xj-haD">
+                            <rect key="frame" x="15" y="15" width="384" height="20"/>
+                            <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstItem="UCY-zG-OzJ" firstAttribute="top" secondItem="7eC-jh-FRX" secondAttribute="top" constant="16" id="VKA-G3-NGH"/>
+                        <constraint firstAttribute="trailing" secondItem="cxl-Xj-haD" secondAttribute="trailing" constant="15" id="9ay-9f-qNk"/>
+                        <constraint firstItem="UCY-zG-OzJ" firstAttribute="top" secondItem="cxl-Xj-haD" secondAttribute="bottom" constant="15" id="SdS-bq-z1n"/>
                         <constraint firstAttribute="trailing" secondItem="UCY-zG-OzJ" secondAttribute="trailing" constant="16" id="fSX-NO-xk9"/>
                         <constraint firstAttribute="bottom" secondItem="UCY-zG-OzJ" secondAttribute="bottom" constant="16" id="nuB-qH-bmb"/>
+                        <constraint firstItem="cxl-Xj-haD" firstAttribute="top" secondItem="7eC-jh-FRX" secondAttribute="top" constant="15" id="qMP-4v-3Nr"/>
+                        <constraint firstItem="cxl-Xj-haD" firstAttribute="leading" secondItem="7eC-jh-FRX" secondAttribute="leading" constant="15" id="rfz-zM-Vzr"/>
                         <constraint firstItem="UCY-zG-OzJ" firstAttribute="leading" secondItem="7eC-jh-FRX" secondAttribute="leading" constant="16" id="xSL-XI-XA1"/>
                     </constraints>
                 </view>
@@ -104,7 +120,7 @@
                 <constraint firstItem="3kJ-TP-WMh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UgK-vB-KYy"/>
                 <constraint firstAttribute="bottom" secondItem="3kJ-TP-WMh" secondAttribute="bottom" id="XeG-aF-i3p"/>
                 <constraint firstItem="7eC-jh-FRX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="jG4-Xu-em2"/>
-                <constraint firstItem="7eC-jh-FRX" firstAttribute="top" secondItem="IhU-J6-hN2" secondAttribute="bottom" id="qhu-hq-fD9"/>
+                <constraint firstItem="7eC-jh-FRX" firstAttribute="top" secondItem="IhU-J6-hN2" secondAttribute="bottom" id="oZ6-dL-NH3"/>
                 <constraint firstItem="3kJ-TP-WMh" firstAttribute="top" secondItem="7eC-jh-FRX" secondAttribute="bottom" id="sqY-Xt-AP2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="IhU-J6-hN2" secondAttribute="trailing" id="vfC-EA-96k"/>
             </constraints>
