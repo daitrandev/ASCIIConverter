@@ -11,7 +11,6 @@ import KeychainSwift
 class GlobalKeychain {
     private static let keychain: KeychainSwift = {
         let keychain = KeychainSwift()
-        keychain.synchronizable = true
         return keychain
     }()
     

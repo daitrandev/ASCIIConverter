@@ -17,6 +17,7 @@ class PurchasingPopupViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var donateLoadingButton: LoadingButton!
     @IBOutlet weak var restoreDonateButton: LoadingButton!
+    @IBOutlet weak var dismissingDetectorView: UIView!
     @IBOutlet weak var cancelContainerView: UIView!
     
     private let viewModel: PurchasingPopupViewModelType
@@ -52,7 +53,7 @@ class PurchasingPopupViewController: UIViewController {
             for: .touchUpInside
         )
         
-        view.addGestureRecognizer(
+        dismissingDetectorView.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
                 action: #selector(didTapCancel)

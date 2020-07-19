@@ -17,6 +17,7 @@
             <connections>
                 <outlet property="cancelButton" destination="CT7-NI-vUY" id="iKJ-nj-Kqe"/>
                 <outlet property="cancelContainerView" destination="IhU-J6-hN2" id="oz7-Om-Br6"/>
+                <outlet property="dismissingDetectorView" destination="ZA3-Bb-rjz" id="MCa-iv-DrQ"/>
                 <outlet property="donateLoadingButton" destination="rhX-RB-0Ol" id="p35-47-ncW"/>
                 <outlet property="restoreDonateButton" destination="EYa-TI-bTB" id="Fa9-EW-ZXv"/>
                 <outlet property="view" destination="iN0-l3-epB" id="HO0-6w-fE8"/>
@@ -27,6 +28,10 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZA3-Bb-rjz">
+                    <rect key="frame" x="0.0" y="44" width="414" height="662"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IhU-J6-hN2">
                     <rect key="frame" x="0.0" y="706" width="414" height="40"/>
                     <subviews>
@@ -69,7 +74,7 @@
                                                 <action selector="didTapDonate" destination="-1" eventType="touchUpInside" id="uyR-FT-RtO"/>
                                             </connections>
                                         </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5B5-WU-OqF">
+                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="5B5-WU-OqF">
                                             <rect key="frame" x="49.5" y="15" width="84.5" height="20"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8yJ-VP-Jht">
@@ -120,7 +125,7 @@
                                                 <action selector="didTapRestoreDonateAds" destination="-1" eventType="touchUpInside" id="qeQ-yL-diG"/>
                                             </connections>
                                         </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JCy-a8-0Ug">
+                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="JCy-a8-0Ug">
                                             <rect key="frame" x="13.5" y="15" width="156" height="20"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donated Before?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHY-4D-4a2">
@@ -181,7 +186,10 @@
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.36031029929577463" colorSpace="custom" customColorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="ZA3-Bb-rjz" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="7WF-DM-kcN"/>
                 <constraint firstItem="IhU-J6-hN2" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="DtP-3h-fWv"/>
+                <constraint firstItem="IhU-J6-hN2" firstAttribute="top" secondItem="ZA3-Bb-rjz" secondAttribute="bottom" id="F9P-Rm-wgt"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZA3-Bb-rjz" secondAttribute="trailing" id="HP9-ES-acr"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7eC-jh-FRX" secondAttribute="trailing" id="Lam-DF-xmn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="7eC-jh-FRX" secondAttribute="bottom" id="O4s-ZK-2jR"/>
                 <constraint firstAttribute="trailing" secondItem="3kJ-TP-WMh" secondAttribute="trailing" id="QlY-Na-9UT"/>
@@ -189,6 +197,7 @@
                 <constraint firstAttribute="bottom" secondItem="3kJ-TP-WMh" secondAttribute="bottom" id="XeG-aF-i3p"/>
                 <constraint firstItem="7eC-jh-FRX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="jG4-Xu-em2"/>
                 <constraint firstItem="7eC-jh-FRX" firstAttribute="top" secondItem="IhU-J6-hN2" secondAttribute="bottom" id="oZ6-dL-NH3"/>
+                <constraint firstItem="ZA3-Bb-rjz" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sU4-LI-uUN"/>
                 <constraint firstItem="3kJ-TP-WMh" firstAttribute="top" secondItem="7eC-jh-FRX" secondAttribute="bottom" id="sqY-Xt-AP2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="IhU-J6-hN2" secondAttribute="trailing" id="vfC-EA-96k"/>
             </constraints>

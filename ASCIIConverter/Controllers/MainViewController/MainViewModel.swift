@@ -33,7 +33,7 @@ class MainViewModel: MainViewModelType {
     }
     
     var isPurchased: Bool {
-        GlobalKeychain.getBool(for: KeychainKey.isPurchased) ?? true
+        GlobalKeychain.getBool(for: KeychainKey.isPurchased) ?? false
     }
     
     weak var delegate: MainViewModelDelegate?
