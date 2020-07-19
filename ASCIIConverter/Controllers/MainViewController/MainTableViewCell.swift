@@ -16,9 +16,8 @@ protocol MainTableViewCellDelegate: class {
 class MainTableViewCell: UITableViewCell {
     private let label: UILabel = {
         let label = UILabel()
-        label.text = "ASCII"
         label.adjustsFontSizeToFitWidth = true
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Roboto-Medium", size: 18)!
         label.textAlignment = .center
         label.layer.cornerRadius = 5
         label.layer.masksToBounds = true
@@ -38,6 +37,7 @@ class MainTableViewCell: UITableViewCell {
         textField.delegate = self
         textField.returnKeyType = .done
         textField.keyboardType = .asciiCapable
+        textField.font = UIFont(name: "Roboto-Regular", size: 18)!
         textField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -57,7 +57,10 @@ class MainTableViewCell: UITableViewCell {
             textField.text = item.content
             textField.attributedPlaceholder = NSAttributedString(
                 string: item.base.fullName,
-                attributes: [.foregroundColor: UIColor.gray]
+                attributes: [
+                    .foregroundColor: UIColor.gray,
+                    .font: UIFont(name: "Roboto-Bold", size: 18) as Any
+                ]
             )
         }
     }

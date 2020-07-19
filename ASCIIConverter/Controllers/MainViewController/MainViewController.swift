@@ -78,8 +78,11 @@ class MainViewController: UIViewController {
         
         loadTheme()
         
-        navigationController?.navigationBar.topItem?.title =
-            "MainTitle".localized
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "Roboto-Bold", size: 18)!
+        ]
+        title = "ASCII Converter"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "refresh"),

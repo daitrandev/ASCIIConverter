@@ -33,6 +33,7 @@
 		F840CED624C3F82D00B7A431 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F840CECD24C3F82D00B7A431 /* Roboto-Bold.ttf */; };
 		F840CED724C3F82D00B7A431 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F840CECE24C3F82D00B7A431 /* Roboto-Regular.ttf */; };
 		F840CEDA24C3F82D00B7A431 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F840CED124C3F82D00B7A431 /* Roboto-Light.ttf */; };
+		F840CEDC24C3FC7B00B7A431 /* UIFont+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEDB24C3FC7B00B7A431 /* UIFont+Utils.swift */; };
 		F852BDF524ACE6DB00E12938 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F852BDF424ACE6DB00E12938 /* MainViewModel.swift */; };
 		F8AD3DA024B77443009F1D95 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AD3D9F24B77443009F1D95 /* Base.swift */; };
 		FA0CF3C121FD747500A42D2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1350F1FA865A500659196 /* AppDelegate.swift */; };
@@ -93,6 +94,7 @@
 		F840CECD24C3F82D00B7A431 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		F840CECE24C3F82D00B7A431 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		F840CED124C3F82D00B7A431 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		F840CEDB24C3FC7B00B7A431 /* UIFont+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Utils.swift"; sourceTree = "<group>"; };
 		F852BDF424ACE6DB00E12938 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		F8AD3D9F24B77443009F1D95 /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				F83F60E624B61E2300618C7E /* MessageDialogPresentable.swift */,
+				F840CEDB24C3FC7B00B7A431 /* UIFont+Utils.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				F8406B6C24B1B85B001A5C03 /* Int+Ext.swift in Sources */,
 				F8406B5C24B1B79D001A5C03 /* UIView+Ext.swift in Sources */,
 				F83F60E924B61F8E00618C7E /* PurchasingPopupViewModel.swift in Sources */,
+				F840CEDC24C3FC7B00B7A431 /* UIFont+Utils.swift in Sources */,
 				23F7CBB321AA2F9A001CC3C4 /* Constants.swift in Sources */,
 				FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */,
 				F8AD3DA024B77443009F1D95 /* Base.swift in Sources */,
