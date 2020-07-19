@@ -75,7 +75,7 @@ class MainViewModel: MainViewModelType {
                         
         // Convert normalText to ASCII Code
         if layoutItem.base == .normalText {
-            asciiCodes = convertTextToASCIICode(from: layoutItem.content) ?? []
+            asciiCodes = convertTextToASCIICode(from: layoutItem.content)
         } else {
             var numbers = layoutItem.content.components(separatedBy: " ")
             for index in 0..<numbers.count {
@@ -90,10 +90,8 @@ class MainViewModel: MainViewModelType {
         }
         
         clearAllContent(exceptedBase: layoutItem.base)
-        
         updateASCIICodeToAllBases(exceptedBase: layoutItem.base, asciiCodes: asciiCodes)
-        
-        convertASCIICodeToText()
+        updateASCIICodeToText()
     }
     
     private func clearAllContent(exceptedBase: Base) {
@@ -106,12 +104,12 @@ class MainViewModel: MainViewModelType {
         self.cellLayoutItems = cellLayoutItems
     }
     
-    private func convertTextToASCIICode(from input: String) -> [String]? {
+    private func convertTextToASCIICode(from input: String) -> [String] {
         var stringNumbers: [String] = []
         
         for char in input {
             guard let asciiValue = char.asciiValue else {
-                return nil
+                return []
             }
             let stringNumber = String(asciiValue)
             stringNumbers.append(stringNumber)
@@ -119,7 +117,7 @@ class MainViewModel: MainViewModelType {
         return stringNumbers
     }
     
-    private func convertASCIICodeToText() {
+    private func updateASCIICodeToText() {
         guard
             let asciiLayoutItem = cellLayoutItems.first(where: { $0.base == .asciiCode }),
             var normalTextLayoutItem = cellLayoutItems.first(where: { $0.base == .normalText }) else {
@@ -135,6 +133,10 @@ class MainViewModel: MainViewModelType {
                 break
             }
             normalTextLayoutItem.content += String(describing: number.char)
+        }
+        
+        if normalTextLayoutItem.content.isEmpty {
+            return
         }
         
         for index in 0..<cellLayoutItems.count {
