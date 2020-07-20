@@ -121,13 +121,12 @@ class MainViewController: UIViewController {
             navigationController?.navigationBar.barTintColor = .white
             navigationController?.navigationBar.tintColor = .greenCoral
             navigationController?.navigationBar.titleTextAttributes = [
-                .foregroundColor: UIColor.white,
+                .foregroundColor: UIColor.black,
                 .font: UIFont(name: "Roboto-Bold", size: 18)!
             ]
         }
         
         setNeedsStatusBarAppearanceUpdate()
-        tableView.reloadData()
     }
     
     @objc private func didTapUnlock() {

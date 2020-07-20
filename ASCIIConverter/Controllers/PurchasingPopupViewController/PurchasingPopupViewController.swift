@@ -45,6 +45,9 @@ class PurchasingPopupViewController: UIViewController {
         if #available(iOS 13, *) {
             donateLoadingButton.set(buttonColor: traitCollection.userInterfaceStyle.themeColor)
             restoreDonateButton.set(buttonColor: traitCollection.userInterfaceStyle.themeColor)
+        } else {
+            donateLoadingButton.set(buttonColor: .greenCoral)
+            restoreDonateButton.set(buttonColor: .greenCoral)
         }
                 
         cancelButton.addTarget(
@@ -59,8 +62,6 @@ class PurchasingPopupViewController: UIViewController {
                 action: #selector(didTapCancel)
             )
         )
-        
-        cancelContainerView.roundedTopCorners(radius: 30)
     }
     
     @objc private func didTapCancel() {

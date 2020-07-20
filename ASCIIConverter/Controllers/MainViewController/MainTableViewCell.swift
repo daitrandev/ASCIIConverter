@@ -103,7 +103,7 @@ class MainTableViewCell: UITableViewCell {
         
         textField.layer.borderColor = UIColor.greenCoral.cgColor
         textField.keyboardAppearance = .default
-        label.backgroundColor = .white
+        label.backgroundColor = .greenCoral
         
         let copyButtonImage = UIImage(named: "copy-green")
         copyButton.setImage(copyButtonImage, for: .normal)
