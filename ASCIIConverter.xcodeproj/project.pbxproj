@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		23F7CBB221AA2F9A001CC3C4 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239C9E711FAF548D000EF3E7 /* MainTableViewCell.swift */; };
-		23F7CBB321AA2F9A001CC3C4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2330D82D2184A66800677B36 /* Constants.swift */; };
+		23F7CBB321AA2F9A001CC3C4 /* AdsUnitIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2330D82D2184A66800677B36 /* AdsUnitIDs.swift */; };
 		23F7CBBC21AA2F9A001CC3C4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23F17A711FB071450088E951 /* Localizable.strings */; };
 		23F7CBBE21AA2F9A001CC3C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23361BBD21855D4C00DC6D95 /* Assets.xcassets */; };
 		23F7CBBF21AA2F9A001CC3C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 23F17A741FB0714B0088E951 /* InfoPlist.strings */; };
@@ -67,7 +67,7 @@
 		232D590E1FB0A3A200E31D60 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		232D590F1FB0A3B200E31D60 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		232D59101FB0A3B200E31D60 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		2330D82D2184A66800677B36 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2330D82D2184A66800677B36 /* AdsUnitIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsUnitIDs.swift; sourceTree = "<group>"; };
 		23361BBD21855D4C00DC6D95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		239C9E6F1FAF5367000EF3E7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		239C9E711FAF548D000EF3E7 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -144,7 +144,7 @@
 				23F7CBC521AA2F9A001CC3C4 /* Info.plist */,
 				23F7CBC621AA3029001CC3C4 /* LaunchScreen.storyboard */,
 				23C1350F1FA865A500659196 /* AppDelegate.swift */,
-				2330D82D2184A66800677B36 /* Constants.swift */,
+				2330D82D2184A66800677B36 /* AdsUnitIDs.swift */,
 				F8AD3D9E24B7741D009F1D95 /* Models */,
 				FA0CF3C921FD770500A42D2E /* Controllers */,
 				F83E327724B041DA006142FE /* Extensions */,
@@ -379,7 +379,7 @@
 				F8406B5C24B1B79D001A5C03 /* UIView+Ext.swift in Sources */,
 				F83F60E924B61F8E00618C7E /* PurchasingPopupViewModel.swift in Sources */,
 				F840CEDC24C3FC7B00B7A431 /* UIFont+Utils.swift in Sources */,
-				23F7CBB321AA2F9A001CC3C4 /* Constants.swift in Sources */,
+				23F7CBB321AA2F9A001CC3C4 /* AdsUnitIDs.swift in Sources */,
 				FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */,
 				F840CEE324C428A400B7A431 /* GlobalKeychain.swift in Sources */,
 				F8AD3DA024B77443009F1D95 /* Base.swift in Sources */,
@@ -562,7 +562,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = B8SW848K42;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -590,7 +590,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = B8SW848K42;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -607,7 +607,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DaiTranDev.ASCIIConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

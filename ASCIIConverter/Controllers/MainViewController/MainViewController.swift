@@ -58,7 +58,7 @@ class MainViewController: UIViewController {
     private func setupAdsViews() {
         if !viewModel.isPurchased {
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-            let adUnitId = isDebug ? bannerAdsUnitIDTrial : bannerAdsUnitID
+            let adUnitId = bannerAdsUnitID
             bannerView?.adUnitID = adUnitId
             bannerView?.rootViewController = self
             bannerView?.load(GADRequest())
@@ -213,8 +213,7 @@ extension MainViewController : GADBannerViewDelegate {
 
 extension MainViewController : GADInterstitialDelegate {
     private func createAndLoadInterstitial() -> GADInterstitial? {
-        let adUnitId: String = isDebug ? interstialAdsUnitIDTrial : interstialAdsUnitID
-        interstitial = GADInterstitial(adUnitID: adUnitId)
+        interstitial = GADInterstitial(adUnitID: interstialAdsUnitID)
         
         guard let interstitial = interstitial else {
             return nil
