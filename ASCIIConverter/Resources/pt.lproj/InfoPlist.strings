@@ -1,9 +1,0 @@
-/* 
-  InfoPlist.strings
-  GCF & GCM Calculator++
-
-  Created by Dai Tran on 10/30/17.
-  Copyright © 2017 DaiTranDev. All rights reserved.
-*/
-"CFBundleDisplayName" = "Conversor ASCII";
-"NSHumanReadableCopyright" = "Copyright © 2020 Dai Tran. All rights reserved.";
