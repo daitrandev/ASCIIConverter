@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyStoreKit
+import GoogleMobileAds
 import IQKeyboardManagerSwift
 
 @UIApplicationMain
@@ -19,6 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         UIFont.loadCustomFonts()
+        
+        IQKeyboardManager.shared.enable = true
+        
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        
+        let nav = UINavigationController(rootViewController: MainViewController())
+        window?.rootViewController = nav
+        
+        if let isPurchased = GlobalKeychain.getBool(for: KeychainKey.isPurchased), isPurchased {
+            return true
+        }
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
             for purchase in purchases {
@@ -35,13 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        IQKeyboardManager.shared.enable = true
-        
-        window = UIWindow()
-        window?.makeKeyAndVisible()
-        
-        let nav = UINavigationController(rootViewController: MainViewController())
-        window?.rootViewController = nav
         return true
     }
 
