@@ -11,6 +11,7 @@
 		23F7CBB321AA2F9A001CC3C4 /* AdsUnitIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2330D82D2184A66800677B36 /* AdsUnitIDs.swift */; };
 		23F7CBBE21AA2F9A001CC3C4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23361BBD21855D4C00DC6D95 /* Assets.xcassets */; };
 		23F7CBC721AA3029001CC3C4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23F7CBC621AA3029001CC3C4 /* LaunchScreen.storyboard */; };
+		D56388A762E0EAB3D33363D3 /* Pods_ASCIIConverter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F50465D4649C2FB4E7C77822 /* Pods_ASCIIConverter.framework */; };
 		F80B169324D96D7C00B1284F /* HUDPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80B169224D96D7C00B1284F /* HUDPresentable.swift */; };
 		F83C388B24B21A6C0019F6F3 /* PurchasingPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83C388A24B21A6C0019F6F3 /* PurchasingPopupViewController.swift */; };
 		F83C388D24B21AA90019F6F3 /* PurchasingPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F83C388C24B21AA90019F6F3 /* PurchasingPopupViewController.xib */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F6AA12BBA482452E5A2AA18 /* Pods-ASCIIConverter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASCIIConverter.debug.xcconfig"; path = "Target Support Files/Pods-ASCIIConverter/Pods-ASCIIConverter.debug.xcconfig"; sourceTree = "<group>"; };
 		2330D82D2184A66800677B36 /* AdsUnitIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsUnitIDs.swift; sourceTree = "<group>"; };
 		23361BBD21855D4C00DC6D95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		239C9E6F1FAF5367000EF3E7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		23F7CBC421AA2F9A001CC3C4 /* ASCIIConverter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCIIConverter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F7CBC521AA2F9A001CC3C4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		23F7CBC621AA3029001CC3C4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DA43AD6157CAEED4BA464004 /* Pods-ASCIIConverter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ASCIIConverter.release.xcconfig"; path = "Target Support Files/Pods-ASCIIConverter/Pods-ASCIIConverter.release.xcconfig"; sourceTree = "<group>"; };
+		F50465D4649C2FB4E7C77822 /* Pods_ASCIIConverter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ASCIIConverter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F80B169224D96D7C00B1284F /* HUDPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDPresentable.swift; sourceTree = "<group>"; };
 		F83C388A24B21A6C0019F6F3 /* PurchasingPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasingPopupViewController.swift; sourceTree = "<group>"; };
 		F83C388C24B21AA90019F6F3 /* PurchasingPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PurchasingPopupViewController.xib; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 				F8406B7524B1DD09001A5C03 /* StoreKit.framework in Frameworks */,
 				F8406B7224B1CDBB001A5C03 /* BuildFile in Frameworks */,
 				F840CEDF24C407B000B7A431 /* BuildFile in Frameworks */,
+				D56388A762E0EAB3D33363D3 /* Pods_ASCIIConverter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +134,8 @@
 		9871A47592F8749DB4F625EF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
+				1F6AA12BBA482452E5A2AA18 /* Pods-ASCIIConverter.debug.xcconfig */,
+				DA43AD6157CAEED4BA464004 /* Pods-ASCIIConverter.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -137,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				F8406B7424B1DD09001A5C03 /* StoreKit.framework */,
+				F50465D4649C2FB4E7C77822 /* Pods_ASCIIConverter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -250,9 +258,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 23F7CBC121AA2F9A001CC3C4 /* Build configuration list for PBXNativeTarget "ASCIIConverter" */;
 			buildPhases = (
+				AEA9E02B628930DBA63B4AFD /* [CP] Check Pods Manifest.lock */,
 				23F7CBAF21AA2F9A001CC3C4 /* Sources */,
 				23F7CBB821AA2F9A001CC3C4 /* Frameworks */,
 				23F7CBBA21AA2F9A001CC3C4 /* Resources */,
+				728882F6CCC1BD04DAFEE88F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -333,6 +343,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		728882F6CCC1BD04DAFEE88F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ASCIIConverter/Pods-ASCIIConverter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ASCIIConverter/Pods-ASCIIConverter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ASCIIConverter/Pods-ASCIIConverter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AEA9E02B628930DBA63B4AFD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ASCIIConverter-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		23F7CBAF21AA2F9A001CC3C4 /* Sources */ = {
@@ -484,6 +536,7 @@
 		};
 		23F7CBC221AA2F9A001CC3C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1F6AA12BBA482452E5A2AA18 /* Pods-ASCIIConverter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -512,6 +565,7 @@
 		};
 		23F7CBC321AA2F9A001CC3C4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA43AD6157CAEED4BA464004 /* Pods-ASCIIConverter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
