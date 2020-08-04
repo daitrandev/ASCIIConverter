@@ -9,7 +9,7 @@
 import SwiftyStoreKit
 import KeychainSwift
 
-protocol PurchasingPopupViewModelDelegate: class, MessageDialogPresentable {
+protocol PurchasingPopupViewModelDelegate: class, MessageDialogPresentable, HUDPresentable {
     func dismiss(completion: (() -> Void)?)
     func setDonateButton(isEnabled: Bool)
     func setRestoreDonate(isEnabled: Bool)
@@ -26,7 +26,9 @@ class PurchasingPopupViewModel: PurchasingPopupViewModelType {
     weak var delegate: PurchasingPopupViewModelDelegate?
     
     func purchaseAds() {
+        delegate?.showLoading()
         SwiftyStoreKit.purchaseProduct("com.daitrandev.ASCIIConverter.removeads") { result in
+            self.delegate?.hideLoading()
             switch result {
             case .success(let purchase):
                 print("Purchase Success: \(purchase.productId)")
