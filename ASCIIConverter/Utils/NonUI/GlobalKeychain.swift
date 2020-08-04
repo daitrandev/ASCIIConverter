@@ -21,4 +21,8 @@ class GlobalKeychain {
     static func set(value: Bool, for key: String) {
         keychain.set(value, forKey: key)
     }
+    
+    static func clear(for key: String) {
+        keychain.delete(key)
+    }
 }

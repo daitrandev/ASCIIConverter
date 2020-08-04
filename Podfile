@@ -8,5 +8,5 @@ target 'ASCIIConverter' do
   # Pods for ASCIIConverter
   pod 'Google-Mobile-Ads-SDK'
   pod 'IQKeyboardManagerSwift'
-
+  pod 'MBProgressHUD'
 end

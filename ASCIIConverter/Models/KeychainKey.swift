@@ -7,5 +7,5 @@
 //
 
 enum KeychainKey {
-    static let isPurchased: String = "isPurchasing"
+    static let isPurchased: String = "isPurchased"
 }

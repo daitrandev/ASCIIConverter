@@ -29,6 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nav = UINavigationController(rootViewController: MainViewController())
         window?.rootViewController = nav
         
+        if UserDefaults.standard.object(forKey: "isFirstRun") == nil {
+            GlobalKeychain.clear(for: KeychainKey.isPurchased)
+            
+            UserDefaults.standard.set(true, forKey: "isFirstRun")
+            UserDefaults.standard.synchronize()
+        }
+        
         if let isPurchased = GlobalKeychain.getBool(for: KeychainKey.isPurchased), isPurchased {
             return true
         }
