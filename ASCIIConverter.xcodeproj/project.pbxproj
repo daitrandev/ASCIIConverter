@@ -37,6 +37,7 @@
 		F840CEE324C428A400B7A431 /* GlobalKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEE224C428A400B7A431 /* GlobalKeychain.swift */; };
 		F840CEE524C42D1800B7A431 /* LoadingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F840CEE424C42D1800B7A431 /* LoadingButton.swift */; };
 		F852BDF524ACE6DB00E12938 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F852BDF424ACE6DB00E12938 /* MainViewModel.swift */; };
+		F8A086B4258F0FE300B543B6 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8A086B3258F0FE300B543B6 /* MainTableViewCell.xib */; };
 		F8AD3DA024B77443009F1D95 /* Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8AD3D9F24B77443009F1D95 /* Base.swift */; };
 		FA0CF3C121FD747500A42D2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23C1350F1FA865A500659196 /* AppDelegate.swift */; };
 		FA0CF3C221FD747800A42D2E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239C9E6F1FAF5367000EF3E7 /* MainViewController.swift */; };
@@ -75,6 +76,7 @@
 		F840CEE224C428A400B7A431 /* GlobalKeychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeychain.swift; sourceTree = "<group>"; };
 		F840CEE424C42D1800B7A431 /* LoadingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingButton.swift; sourceTree = "<group>"; };
 		F852BDF424ACE6DB00E12938 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		F8A086B3258F0FE300B543B6 /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		F8AD3D9F24B77443009F1D95 /* Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -215,6 +217,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		F8A086B7258F7AA300B543B6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				239C9E711FAF548D000EF3E7 /* MainTableViewCell.swift */,
+				F8A086B3258F0FE300B543B6 /* MainTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		F8AD3D9E24B7741D009F1D95 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,7 +249,7 @@
 			children = (
 				239C9E6F1FAF5367000EF3E7 /* MainViewController.swift */,
 				F852BDF424ACE6DB00E12938 /* MainViewModel.swift */,
-				239C9E711FAF548D000EF3E7 /* MainTableViewCell.swift */,
+				F8A086B7258F7AA300B543B6 /* Cell */,
 			);
 			path = MainViewController;
 			sourceTree = "<group>";
@@ -328,6 +339,7 @@
 				F840CED624C3F82D00B7A431 /* Roboto-Bold.ttf in Resources */,
 				F840CEDA24C3F82D00B7A431 /* Roboto-Light.ttf in Resources */,
 				23F7CBC721AA3029001CC3C4 /* LaunchScreen.storyboard in Resources */,
+				F8A086B4258F0FE300B543B6 /* MainTableViewCell.xib in Resources */,
 				23F7CBBE21AA2F9A001CC3C4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -487,12 +499,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = B8SW848K42;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/ASCIIConverter/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ASCIIConverter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -500,7 +513,22 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"IQKeyboardManagerSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DaiTranDev.ASCIIConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -515,12 +543,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = B8SW848K42;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/ASCIIConverter/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/ASCIIConverter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -528,7 +557,22 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"IQKeyboardManagerSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.DaiTranDev.ASCIIConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
