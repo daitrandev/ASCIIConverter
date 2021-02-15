@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
     
     private var bannerView: GADBannerView?
     
-    private var interstitial: GADInterstitial?
+    private var interstitial: GADInterstitialAd?
     
     private let viewModel: MainViewModelType
     
@@ -52,27 +52,37 @@ class MainViewController: UIViewController {
             top: view.topAnchor, bottom: view.bottomAnchor,
             left: view.leftAnchor, right: view.rightAnchor
         )
-        tableView.register(MainTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(
+            UINib(nibName: String(describing: MainTableViewCell.self), bundle: .main),
+            forCellReuseIdentifier: cellId
+        )
     }
     
     private func setupAdsViews() {
         if !viewModel.isPurchased {
+            let request = GADRequest()
             bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-            let adUnitId = bannerAdsUnitID
-            bannerView?.adUnitID = adUnitId
+            bannerView?.adUnitID = bannerAdsUnitID
             bannerView?.rootViewController = self
-            bannerView?.load(GADRequest())
+            bannerView?.load(request)
             bannerView?.delegate = self
             
-            interstitial = createAndLoadInterstitial()
+            GADInterstitialAd.load(withAdUnitID: interstialAdsUnitID, request: request) { (ad, error) in
+                if let error = error {
+                    print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                    return
+                }
+                self.interstitial = ad
+                self.interstitial?.present(fromRootViewController: self)
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        setupAdsViews()
         setupViews()
+        setupAdsViews()
         
         loadTheme()
         
@@ -143,7 +153,7 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.cellLayoutItems.count
+        viewModel.cellLayoutItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -190,8 +200,8 @@ extension MainViewController: MainTableViewCellDelegate {
     }
 }
 
-extension MainViewController : GADBannerViewDelegate {
-    func adViewDidReceiveAd(_ bannerView: GADBannerView) {
+extension MainViewController: GADBannerViewDelegate {
+    func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
         print("Banner loaded successfully")
         
         // Reposition the banner ad to create a slide down effect
@@ -203,31 +213,5 @@ extension MainViewController : GADBannerViewDelegate {
             bannerView.transform = CGAffineTransform.identity
             self.tableView.tableHeaderView = bannerView
         }
-    }
-    
-    func adView(_ bannerView: GADBannerView, didFailToReceiveAdWithError error: GADRequestError) {
-        print("Fail to receive ads")
-        print(error)
-    }
-}
-
-extension MainViewController : GADInterstitialDelegate {
-    private func createAndLoadInterstitial() -> GADInterstitial? {
-        interstitial = GADInterstitial(adUnitID: interstialAdsUnitID)
-        
-        guard let interstitial = interstitial else {
-            return nil
-        }
-        
-        let request = GADRequest()
-        // Remove the following line before you upload the app
-        interstitial.load(request)
-        interstitial.delegate = self
-        
-        return interstitial
-    }
-    
-    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        ad.present(fromRootViewController: self)
     }
 }
